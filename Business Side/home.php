@@ -60,18 +60,6 @@ $count =$stmt->rowCount();
     ?>
   </div>
   <div style="background-color: #00b7bb; height: 20px; width: 100%"></div>
-
-  <div style="height: 500px; width: 350px; margin-left: 150px; background-color: aqua; ">
-    <p>test</p>
-  </div>
-  <div style="height: 500px; width: 350px; margin-left: 503px; background-color: black; ">
-    <p>test</p>
-  </div>
-  <div style="height: 500px; width: 350px; margin-left: 150px; background-color: aqua; ">
-    <p>test</p>
-  </div>
-  <div style="height: 500px; width: 350px; margin-left: 150px; background-color: black; ">
-    <p>test</p>
-  </div>
+  
   </body>
 </html>
