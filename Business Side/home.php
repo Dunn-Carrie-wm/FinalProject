@@ -59,13 +59,25 @@ $count =$stmt->rowCount();
     }
     ?>
   </div>
-  <div style="background-color: #00b7bb; height: 20px; width: 100%"></div>
+  <div style="background-color: #00b7bb; height: 20px; width: 1400px;"></div>
+  <div style=" width: 100%; height: 600px;">
 
-  <div style="background-color: crimson; width: 100%; height: 600px;">
-
-    <div style="height: ">
+    <div style="height: 100%;  width: 350px;">
 
     </div>
+
+    <div style="height: 100%; width: 350px; background-color: black; margin-left: 350px; margin-top: -550px;">
+
+    </div>
+
+    <div style="height: 100%;  width: 350px; margin-left: 700px; margin-top: -550px; ">
+
+    </div>
+
+    <div style=" height: 100%; width: 350px; background-color: black; margin-left: 1050px;margin-top: -550px; ">
+
+    </div>
+
 
   </div>
   
