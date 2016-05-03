@@ -2,14 +2,18 @@
 session_start();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Login </title>
     <link href="https://assets.onestore.ms/cdnfiles/onestorerolling-1601-22000/shell/v3/scss/shell.min.css"
           rel="stylesheet" type="text/css" media="screen"/>
     <link href="login.css" rel="stylesheet" type="text/css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="login.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 <?php
@@ -45,6 +49,7 @@ if(@$_POST['formSubmit'] == "Submit")
 
     if($userinfo){
         print_r($stmt->errorInfo());
+        $_SESSION['user_id'] = $userinfo['id'];
 
         header("Location: home.php");
     }
@@ -58,36 +63,28 @@ if(@$_POST['formSubmit'] == "Submit")
 
 }?>
 
+<h1 style="text-align: center; color: #00b7bb; margin-top: 4%">Login</h1>
+<div class="container">
 
-<div class="site__container">
-    <h1 style="text-align: center; font-size: 70px;">Sign In</h1>
-    <div class="grid__container">
+    <div class="card card-container">
 
-        <form method="post" class="form form--login">
+        <img id="profile-img" class="profile-img-card" src="profile.png"/>
 
-            <div class="form__field">
-                <label class="fontawesome-user" for="login__username"><span class="hidden">Username</span></label>
-                <input type="text" name="username" placeholder="Username or E-mail"/>
+        <span style="color: orangered"></span>
 
-            </div>
+        <form method = "post" class="form-signin">
 
-            <div class="form__field">
-                <label class="fontawesome-lock" for="login__password"><span class="hidden">Password</span></label>
-                <input type="password" name="password" placeholder="Password"/>
+            <br>
 
-            </div>
+            <input type="text" class="form-control, inputEmail" name="username" placeholder="Username" required autofocus>
 
-            <div class="form__field">
-                <input type="submit" name="formSubmit" value="Submit"/>
-            </div>
+            <input type="password" class="form-control, inputPassword" name="password" placeholder="Password" required>
 
+            <input name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" >
         </form>
-
-        <p class="text--center">Not a member? <a href="signup.php">Sign up now</a> <span class="fontawesome-arrow-right"></span></p>
-
     </div>
-
 </div>
+
 
 </body>
 </html>

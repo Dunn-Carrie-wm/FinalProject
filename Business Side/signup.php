@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title> Sign up </title>
+
+    <link href="signup.css" rel="stylesheet" type="text/css">
+    <script src="signup.js"></script>
     <link href="https://assets.onestore.ms/cdnfiles/onestorerolling-1601-22000/shell/v3/scss/shell.min.css"
           rel="stylesheet" type="text/css" media="screen"/>
-    <link href="signup.css" rel="stylesheet" type="text/css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 <?php
@@ -72,64 +76,35 @@ if(@$_POST['formSubmit'] == "Submit")
 
 }?>
 
+<h1 style="text-align: center; color: #00b7bb; margin-top: 4%">Sign Up</h1>
+<div class="container">
 
-<div class="site__container">
-    <h1 style="text-align: center; font-size: 70px;">Sign up</h1>
-    <div class="grid__container">
+    <div class="card card-container">
 
-        <form method="post" class="form form--login">
+        <img id="profile-img" class="profile-img-card" src="profile.png"/>
 
-            <div class="form__field">
-                <label class="fontawesome-user" for="login__firstName"><span class="hidden">First Name</span></label>
-                <input type="text" name="firstName" placeholder="First Name"/>
+        <span style="color: orangered"></span>
 
-            </div>
+        <form method = "post" class="form-signin">
 
-            <div class="form__field">
-                <label class="fontawesome-user" for="login__lastName"><span class="hidden">Last Name</span></label>
-                <input type="text" name="lastName" placeholder="Last Name"/>
+            <br>
+            <input type="text" class="form-control, inputEmail" name="firstName" placeholder="First Name" required autofocus>
 
-            </div>
+            <input type="text" class="form-control, inputEmail" name="lastName" placeholder="Last Name" required autofocus>
 
-            <div class="form__field">
-                <label class="fontawesome-lock" for="login__password"><span class="hidden">Email</span></label>
-                <input type="text" name="email" placeholder="Email"/>
+            <input type="text" class="form-control, inputEmail" name="username" placeholder="Username" required autofocus>
 
-            </div>
+            <input type="email" class="form-control, inputEmail" name="email" placeholder="Email" required autofocus>
 
-            <div class="form__field">
-                <label class="fontawesome-user" for="login__username"><span class="hidden">Username</span></label>
-                <input type="text" name="username" placeholder="Username"/>
+            <input type="password" class="form-control, inputPassword" name="password" placeholder="Password" required>
 
-            </div>
+            <input type="text" class="form-control, inputEmail" name="place" placeholder="Where Do You Work?" required autofocus>
 
+            <input type="text" class="form-control, inputEmail" name="status" placeholder="Status" required autofocus>
 
-            <div class="form__field">
-                <label class="fontawesome-lock" for="login__password"><span class="hidden">Password</span></label>
-                <input type="password" name="password" placeholder="Password"/>
-
-            </div>
-
-            <div class="form__field">
-                <label class="fontawesome-user" for="login__place"><span class="hidden">Where Do You Work?</span></label>
-                <input type="text" name="place" placeholder="Where Do You Work?"/>
-
-            </div>
-
-            <div class="form__field">
-                <label class="fontawesome-user" for="login__status"><span class="hidden">Medical Status?</span></label>
-                <input type="text" name="status" placeholder="Medical Status?"/>
-
-            </div>
-
-            <div class="form__field">
-                <input type="submit" name="formSubmit" value="Submit" />
-            </div>
-
+            <input name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" onclick="newPage()">
         </form>
-
     </div>
-
 </div>
 
 </body>
