@@ -5,7 +5,7 @@ require_once('startsession.php');
 // Insert the page header
 $page_title = 'Home page';
 
-$dbh = new PDO('mysql:host=localhost;dbname=final', 'root', 'root');
+$dbh = new PDO('mysql:host=127.0.0.1;dbname=injection', 'root', 'root');
 
 
 // Grab the profile data from the database
@@ -54,12 +54,11 @@ $count =$stmt->rowCount();
 
       // The user row was found so display the user data
       $row = $stmt->fetch();
-      echo '<p style="font-size: 70px; margin-left: 120px; margin-top: -77px;">' . $row['firstName'] . '</p>';
-      echo '<p style="margin-left: 280px; font-size: 70px; margin-top: -80px">'. $row['lastName'] . '</p>';
+      echo '<p style="font-size: 70px; margin-left: 120px; margin-top: -77px;">' . $row['firstName'] .' '. $row['lastName'] . '</p>';
     }
     ?>
   </div>
-  <div style="background-color: #00b7bb; height: 20px; width: 1400px;"></div>
+  <div style="background-color: lightblue; height: 20px; width: 1400px;"></div>
   <div style=" width: 100%; height: 600px;">
 
     <div style="height: 100%;  width: 350px;">

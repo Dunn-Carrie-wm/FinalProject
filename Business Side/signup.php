@@ -15,7 +15,7 @@
 <body>
 <?php
 try {
-    $dbh = new PDO('mysql:host=127.0.0.1;dbname=final', 'root', 'root');
+    $dbh = new PDO('mysql:host=127.0.0.1;dbname=injection', 'root', 'root');
 
 } catch (PDOException $e) {
     print "Error!: " . $e->getMessage() . "<br/>";
