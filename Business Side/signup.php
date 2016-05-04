@@ -76,16 +76,16 @@ if(@$_POST['formSubmit'] == "Submit")
 
 }?>
 
-<h1 style="text-align: center; color: #00b7bb; margin-top: 4%">Sign Up</h1>
-<div class="container">
+<h1 style="text-align: center; color: #00b7bb; margin-top: 2%; font-size: 50px;">Sign Up</h1>
+<div class="container" >
 
-    <div class="card card-container">
+    <div class="card card-container" style="background-color: black">
 
         <img id="profile-img" class="profile-img-card" src="profile.png"/>
 
         <span style="color: orangered"></span>
 
-        <form method = "post" class="form-signin">
+        <form method = "post" class="form-signin" >
 
             <br>
             <input type="text" class="form-control, inputEmail" name="firstName" placeholder="First Name" required autofocus>
@@ -106,6 +106,6 @@ if(@$_POST['formSubmit'] == "Submit")
         </form>
     </div>
 </div>
-
+<!--style="background-color: darkgrey; color: white"-->
 </body>
 </html>

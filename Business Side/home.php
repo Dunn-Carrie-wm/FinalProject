@@ -64,18 +64,80 @@ $count =$stmt->rowCount();
 
     <div style="height: 100%;  width: 350px;">
 
+      <h1 style="text-align: center;">Prediabetes</h1>
+
+      <h2 style="text-decoration: underline; margin-top: 35px; padding-left: 20px;">Medicine:</h2>
+        <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Acarbose (Precose) </h3>
+        <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Metformin (Glucophage)</h3>
+        <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Glucomannan</h3>
+
+
+      <h2 style="text-decoration: underline; margin-top: 50px; padding-left: 20px;">Life Style:</h2>
+        <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Physical Activity</h3>
+        <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Low carbohydrate diet</h3>
+        <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Low Fat diet</h3>
+
+      <h2 style="text-decoration: underline; margin-top: 50px; padding-left: 20px;">Other:</h2>
+        <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Weight Loss (Lower BMI)</h3>
+        <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Healthy Diet</h3>
+
     </div>
 
-    <div style="height: 100%; width: 350px; background-color: black; margin-left: 350px; margin-top: -550px;">
+    <div style="height: 100%; width: 350px; background-color: black; margin-left: 350px; margin-top: -600px; color: white;">
+      <h1 style="text-align: center; padding-left: 20px; ">Gestational</h1>
 
+      <h2 style="text-decoration: underline; margin-top: 35px; padding-left: 20px;">Medicine:</h2>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Insulin by injection </h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Insulin lispro by injection (Humalog)</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Metformin (Glucophage)</h3>
+
+
+      <h2 style="text-decoration: underline; margin-top: 50px; padding-left: 20px;">Life Style:</h2>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Physical exercise </h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Healthy diet</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Diabetic diet</h3>
+
+      <h2 style="text-decoration: underline; margin-top: 50px; padding-left: 20px;padding-left: 20px;">Other:</h2>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Weight Loss (Lower BMI)</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Smoking cessation</h3>
     </div>
 
-    <div style="height: 100%;  width: 350px; margin-left: 700px; margin-top: -550px; ">
+    <div style="height: 100%;  width: 350px; margin-left: 700px; margin-top: -600px; ">
+      <h1 style="text-align: center;padding-left: 20px; ">Type 1</h1>
 
+      <h2 style="text-decoration: underline; margin-top: 35px; padding-left: 20px;">Medicine:</h2>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Insulin detemir (Levemir)</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Insulin glulisine (Apidra)</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Insulin lispro (Humalog)</h3>
+
+
+      <h2 style="text-decoration: underline; margin-top: 50px; padding-left: 20px;">Life Style:</h2>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Physical exercise</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Diabetic diet</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Healthy diet</h3>
+
+      <h2 style="text-decoration: underline; margin-top: 50px; padding-left: 20px;">Other:</h2>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Carbohydrate counting</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Nutrition counseling</h3>
     </div>
 
-    <div style=" height: 100%; width: 350px; background-color: black; margin-left: 1050px;margin-top: -550px; ">
+    <div style=" height: 100%; width: 350px; background-color: black; margin-left: 1050px;margin-top: -600px; color: white; ">
+      <h1 style="text-align: center; padding-left: 20px; ">Type 2</h1>
 
+      <h2 style="text-decoration: underline; margin-top: 35px; padding-left: 20px;">Medicine:</h2>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Sitagliptin (Januvia)</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Glimepiride (Amaryl)</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Acarbose (Precose)</h3>
+
+
+      <h2 style="text-decoration: underline; margin-top: 50px; padding-left: 20px;">Life Style:</h2>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Smoking cessation</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Dietary fiber</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Physical exercise</h3>
+
+      <h2 style="text-decoration: underline; margin-top: 50px; padding-left: 20px;">Other:</h2>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 20px"> Nutrition counseling</h3>
+      <h3 style="margin-left: 20px; padding-left: 20px; margin-top: 10px"> Injectable suspension </h3>
     </div>
 
 
