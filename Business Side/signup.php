@@ -88,7 +88,7 @@ if(@$_POST['formSubmit'] == "Submit")
         <form method = "post" class="form-signin" >
 
             <br>
-            <input type="text" class="form-control, inputEmail" name="firstName" placeholder="First Name" required autofocus>
+            <input type="text" class="form-control, inputEmail" name="firstName" placeholder="First Name" required autofocus style="background-color: darkgrey; color: white">
 
             <input type="text" class="form-control, inputEmail" name="lastName" placeholder="Last Name" required autofocus>
 
@@ -106,6 +106,5 @@ if(@$_POST['formSubmit'] == "Submit")
         </form>
     </div>
 </div>
-<!--style="background-color: darkgrey; color: white"-->
 </body>
 </html>
