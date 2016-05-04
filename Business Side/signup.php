@@ -88,19 +88,19 @@ if(@$_POST['formSubmit'] == "Submit")
         <form method = "post" class="form-signin" >
 
             <br>
-            <input type="text" class="form-control, inputEmail" name="firstName" placeholder="First Name" required autofocus style="background-color: darkgrey; color: white">
+            <input type="text" class="form-control, inputEmail" name="firstName" placeholder="First Name" required autofocus style="background-color: lightblue; color: white;">
 
-            <input type="text" class="form-control, inputEmail" name="lastName" placeholder="Last Name" required autofocus>
+            <input type="text" class="form-control, inputEmail" name="lastName" placeholder="Last Name" required autofocus style="background-color: lightblue; color: white;">
 
-            <input type="text" class="form-control, inputEmail" name="username" placeholder="Username" required autofocus>
+            <input type="text" class="form-control, inputEmail" name="username" placeholder="Username" required autofocus style="background-color: lightblue; color: white;">
 
-            <input type="email" class="form-control, inputEmail" name="email" placeholder="Email" required autofocus>
+            <input type="email" class="form-control, inputEmail" name="email" placeholder="Email" required autofocus style="background-color: lightblue; color: white;">
 
-            <input type="password" class="form-control, inputPassword" name="password" placeholder="Password" required>
+            <input type="password" class="form-control, inputPassword" name="password" placeholder="Password" required style="background-color: lightblue; color: white;">
 
-            <input type="text" class="form-control, inputEmail" name="place" placeholder="Where Do You Work?" required autofocus>
+            <input type="text" class="form-control, inputEmail" name="place" placeholder="Where Do You Work?" required autofocus style="background-color: lightblue; color: white;">
 
-            <input type="text" class="form-control, inputEmail" name="status" placeholder="Status" required autofocus>
+            <input type="text" class="form-control, inputEmail" name="status" placeholder="Status" required autofocus style="background-color: lightblue; color: white;">
 
             <input name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" onclick="newPage()">
         </form>

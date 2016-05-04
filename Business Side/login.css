@@ -8,12 +8,13 @@ body, html {
     height: 100%;
     background-color: white;
 }
-
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: grey;
+}
 .card-container.card {
     max-width: 350px;
     padding: 40px 40px;
 }
-
 .btn {
     font-weight: 700;
     height: 36px;
@@ -27,7 +28,7 @@ body, html {
  * Card component
  */
 .card {
-    background-color: #F7F7F7;
+    background-color: #6f6f70;
     /* just in case there no content*/
     padding: 20px 25px 30px;
     margin: 0 auto 25px;
@@ -126,15 +127,19 @@ body, html {
 .btn.btn-signin:hover,
 .btn.btn-signin:active,
 .btn.btn-signin:focus {
-    background-color: rgb(12, 97, 33);
+    background-color: rgb(212, 34, 72);
 }
 
 .forgot-password {
-    color: rgb(104, 145, 162);
+    color: rgb(71, 171, 255);
 }
 
 .forgot-password:hover,
 .forgot-password:active,
 .forgot-password:focus{
-    color: rgb(12, 97, 33);
+    color: rgb(212, 34, 72);
+}
+
+input{
+    border-color: darkgray;
 }
