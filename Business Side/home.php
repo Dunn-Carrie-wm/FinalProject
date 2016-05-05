@@ -5,6 +5,11 @@ require_once('startsession.php');
 // Insert the page header
 $page_title = 'Home page';
 
+if (!isset($_SESSION['user_id'])) {
+  echo '<p class="login">Please <a href="login.php">log in</a> to access this page.</p>';
+  exit();
+}
+
 $dbh = new PDO('mysql:host=127.0.0.1;dbname=injection', 'root', 'root');
 
 
