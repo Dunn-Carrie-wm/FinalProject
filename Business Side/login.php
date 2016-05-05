@@ -17,51 +17,45 @@ session_start();
 </head>
 <body>
 <?php
-try {
-    $dbh = new PDO('mysql:host=127.0.0.1;dbname=final', 'root', 'root');
+    require_once("../Client Side/connect.php");
 
-} catch (PDOException $e) {
-    print "Error!: " . $e->getMessage() . "<br/>";
-    die();
-}
-if(@$_POST['formSubmit'] == "Submit")
-{
-    $errorMessage = "";
-
-    if(empty($_POST['username']))
+    if(@$_POST['formSubmit'] == "Submit")
     {
-        $errorMessage = "<li>You forgot to enter your username.</li>";
+        $errorMessage = "";
+
+        if(empty($_POST['username']))
+        {
+            $errorMessage = "<li>You forgot to enter your username.</li>";
+        }
+        if(empty($_POST['password']))
+        {
+            $errorMessage = "<li>You forgot to enter your last password.</li>";
+        }
+
+        $stmt = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+
+        $result = $stmt->execute(
+            array(
+                'username' =>$_POST['username'],
+                'password' =>$_POST['password']
+            )
+        );
+        $userinfo = $stmt->fetch();
+
+        if($userinfo){
+            print_r($stmt->errorInfo());
+            $_SESSION['user_id'] = $userinfo['id'];
+
+            header("Location: home.php");
+        }
+
+        if(!empty($errorMessage))
+        {
+            echo("<p>There was an error with your form:</p>\n");
+            echo("<ul>" . $errorMessage . "</ul>\n");
+        }
     }
-    if(empty($_POST['password']))
-    {
-        $errorMessage = "<li>You forgot to enter your last password.</li>";
-    }
-
-    $stmt = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
-
-    $result = $stmt->execute(
-        array(
-            'username' =>$_POST['username'],
-            'password' =>$_POST['password']
-        )
-    );
-    $userinfo = $stmt->fetch();
-
-    if($userinfo){
-        print_r($stmt->errorInfo());
-        $_SESSION['user_id'] = $userinfo['id'];
-
-        header("Location: home.php");
-    }
-
-    if(!empty($errorMessage))
-    {
-        echo("<p>There was an error with your form:</p>\n");
-        echo("<ul>" . $errorMessage . "</ul>\n");
-    }
-
-
-}?>
+?>
 
 <h1 style="text-align: center; color: #00b7bb; margin-top: 4%">Login</h1>
 <div class="container">
