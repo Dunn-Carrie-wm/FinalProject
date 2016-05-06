@@ -165,13 +165,22 @@
 
             <div>
                 <div style="width: 15%; right: 0; top: 0; position: absolute">
-                    <img src="profile.png" style="width: 70%; float: right; top: 0">
+                    <img src="profile.png" style="width: 80%; float: right; top: 0; border: solid darkslategray">
                 </div>
 
-                <div style="margin-top: 200px">
+                <div style="margin-top: 10px">
                     <?php
-                    $results = draw_calendar($month,$year, $dbh, $monthName);
-                    echo $results[0];
+                        $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
+                        $stmt = $dbh ->prepare($query);
+                        $stmt->execute();
+                        $result = $stmt->fetch();
+
+                        echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['firstName'] . "</p>";
+                        echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['lastName'] . "</p>";
+                        echo "<p style='margin-left: 250px; font-size: x-large'>Type: " . $result['type'] . "</p>";
+
+                        $results = draw_calendar($month,$year, $dbh, $monthName);
+                        echo $results[0];
                     ?>
                 </div>
 
@@ -186,7 +195,7 @@
                                             <th>Time Taken</th>
                                         </tr>
                                         <?php
-                                        $query = "SELECT * FROM calendar WHERE date = :date ORDER BY medicine_time";
+                                        $query = "SELECT * FROM calendar WHERE date = :date AND medicine_name != '' ORDER BY medicine_time";
                                         $stmt = $dbh->prepare($query);
                                         $stmt->execute(array('date'=>$results[1]));
                                         $info = $stmt->fetchAll();
@@ -217,7 +226,7 @@
                                             <th>Activity Name</th>
                                         </tr>
                                         <?php
-                                        $query = "SELECT * FROM calendar WHERE date = :date";
+                                        $query = "SELECT * FROM calendar WHERE date = :date AND activity_name != ''";
                                         $stmt = $dbh->prepare($query);
                                         $stmt->execute(array('date'=>$results[1]));
                                         $info = $stmt->fetchAll();

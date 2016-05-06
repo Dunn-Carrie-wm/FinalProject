@@ -1,5 +1,3 @@
-<?php session_start(); ?>
-
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -16,13 +14,8 @@
 
 <body>
 <?php
-try {
-    $dbh = new PDO('mysql:host=127.0.0.1;dbname=injection', 'root', 'root');
+require_once("connect.php");
 
-} catch (PDOException $e) {
-    print "Error!: " . $e->getMessage() . "<br/>";
-    die();
-}
 if(@$_POST['formSubmit'] == "Submit")
 {
     $errorMessage = "";
@@ -36,7 +29,7 @@ if(@$_POST['formSubmit'] == "Submit")
         $errorMessage = "<li>You forgot to enter your last password.</li>";
     }
 
-    $stmt = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+    $stmt = $dbh->prepare("SELECT * FROM client WHERE username = :username AND password = :password");
 
     $result = $stmt->execute(
         array(
@@ -50,7 +43,7 @@ if(@$_POST['formSubmit'] == "Submit")
         print_r($stmt->errorInfo());
         $_SESSION['user_id'] = $userinfo['id'];
 
-        header("Location: home.php");
+        header("Location: profile.php");
     }
 
     if(!empty($errorMessage))

@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -22,15 +19,6 @@ session_start();
     if(@$_POST['formSubmit'] == "Submit")
     {
         $errorMessage = "";
-
-        if(empty($_POST['username']))
-        {
-            $errorMessage = "<li>You forgot to enter your username.</li>";
-        }
-        if(empty($_POST['password']))
-        {
-            $errorMessage = "<li>You forgot to enter your last password.</li>";
-        }
 
         $stmt = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
 
