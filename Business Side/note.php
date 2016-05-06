@@ -13,6 +13,23 @@
 
 <div style="background-color: white; height: 700px; width: 370px; position: absolute; margin-left: 10px; margin-top: 10px;">
 <h1 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman">Notes</h1>
+    <?php
+   $dbh = new PDO('mysql:host=localhost;dbname=injection', 'root', 'root');
+
+    // Retrieve the user data from MySQL
+    $query = "SELECT title, date FROM note";
+    $stmt = $dbh->prepare($query);
+    $stmt->execute();
+    $results = $stmt ->fetchAll();
+
+
+    echo '<table >';
+            foreach($results as $row)
+            {
+                echo '<tr style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['title'].'</td>';
+            }
+    echo '</table>'
+    ?>
 </div>
 <?php
 try {
@@ -88,6 +105,33 @@ if(@$_POST['formSubmit'] == "Submit")
             <input class="w3-input" type="date" name="date">
         </p>
             <br>
+        <p>
+            <label>Text</label>
+            <input class="w3-input" type="text" style="height: 100px;" name="text">
+        </p>
+        <br>
+
+        <input name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" style="height: 50px; width: 300px; margin-left: 570px; border-radius: 10px;">
+    </form>
+</div>
+
+<div id="" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; ">
+    <br>
+    <div style="background-color: pink;">
+        <h2 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">New Entry</h2>
+    </div>
+
+    <form class="w3-container" method="post">
+        <p>
+            <label>Title</label>
+            <input class="w3-input" type="text" name="title">
+        </p>
+        <br>
+        <p>
+            <label>Date</label>
+            <input class="w3-input" type="date" name="date">
+        </p>
+        <br>
         <p>
             <label>Text</label>
             <input class="w3-input" type="text" style="height: 100px;" name="text">

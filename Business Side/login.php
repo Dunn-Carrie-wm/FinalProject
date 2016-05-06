@@ -60,7 +60,7 @@ session_start();
 <h1 style="text-align: center; color: #00b7bb; margin-top: 4%">Login</h1>
 <div class="container">
 
-    <div class="card card-container">
+    <div class="card card-container" style="background-color: black">
 
         <img id="profile-img" class="profile-img-card" src="profile.png"/>
 
@@ -70,9 +70,9 @@ session_start();
 
             <br>
 
-            <input type="text" class="form-control, inputEmail" name="username" placeholder="Username" required autofocus>
+            <input type="text" class="form-control, inputEmail" name="username" placeholder="Username" required autofocus style="background-color: lightblue; color: white;">
 
-            <input type="password" class="form-control, inputPassword" name="password" placeholder="Password" required>
+            <input type="password" class="form-control, inputPassword" name="password" placeholder="Password" required style="background-color: lightblue; color: white;">
 
             <input name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" >
         </form>
