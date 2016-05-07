@@ -1,5 +1,3 @@
-<?php session_start(); ?>
-
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -12,78 +10,110 @@
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../Css/style.css">
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <style>
+        input
+        {
+            background-color: lightblue;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
 <?php
-try {
-    $dbh = new PDO('mysql:host=127.0.0.1;dbname=injection', 'root', 'root');
+    require_once("connect.php");
 
-} catch (PDOException $e) {
-    print "Error!: " . $e->getMessage() . "<br/>";
-    die();
-}
-if(@$_POST['formSubmit'] == "Submit")
-{
-    $errorMessage = "";
-
-    if(empty($_POST['username']))
+    if(@$_POST['formSubmit'] == "Submit")
     {
-        $errorMessage = "<li>You forgot to enter your username.</li>";
+        $errorMessage = "";
+
+        if(empty($_POST['username']))
+        {
+            $errorMessage = "<li>You forgot to enter your username.</li>";
+        }
+        if(empty($_POST['password']))
+        {
+            $errorMessage = "<li>You forgot to enter your last password.</li>";
+        }
+
+        $stmt = $dbh->prepare("SELECT * FROM client WHERE username = :username AND password = :password");
+
+        $result = $stmt->execute(
+            array(
+                'username' =>$_POST['username'],
+                'password' =>$_POST['password']
+            )
+        );
+        $userinfo = $stmt->fetch();
+
+        if($userinfo){
+            print_r($stmt->errorInfo());
+            $_SESSION['user_id'] = $userinfo['id'];
+
+            header("Location: profile.php");
+        }
+
+        if(!empty($errorMessage))
+        {
+            echo("<p>There was an error with your form:</p>\n");
+            echo("<ul>" . $errorMessage . "</ul>\n");
+        }
     }
-    if(empty($_POST['password']))
-    {
-        $errorMessage = "<li>You forgot to enter your last password.</li>";
-    }
+?>
 
-    $stmt = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+    <nav>
+        <div class="navToggle">
+            <div class="icon"></div>
+        </div>
+        <ul>
+            <?php
+            if(isset($_SESSION['user_id']))
+                echo "<li><a href=\"profile.php\">Profile</a></li>";
+            else
+                echo "<li><a href=\"login.php\">Profile</a></li>";
+            ?>
+            <li><a href="noteinput.php">Note Pad</a></li>
+            <li><a href="reminderinput.php">Reminder</a></li>
+            <li><a href="general.php">General Facts</a></li>
 
-    $result = $stmt->execute(
-        array(
-            'username' =>$_POST['username'],
-            'password' =>$_POST['password']
-        )
-    );
-    $userinfo = $stmt->fetch();
+            <?php
+            if(isset($_SESSION['user_id']))
+                echo "<li><a href=\"logout.php\">Log Out</a></li>";
+            else
+                echo "<li><a href=\"login.php\">Log In</a></li>";
+            ?>
+        </ul>
+    </nav>
 
-    if($userinfo){
-        print_r($stmt->errorInfo());
-        $_SESSION['user_id'] = $userinfo['id'];
+    <script>
+        $(".navToggle").click (function(){
+            $(this).toggleClass("open");
+            $("nav").toggleClass("open");
+        });
+    </script>
 
-        header("Location: home.php");
-    }
+    <h1 style="text-align: center; color: #00b7bb; margin-top: 4%">Login</h1>
 
-    if(!empty($errorMessage))
-    {
-        echo("<p>There was an error with your form:</p>\n");
-        echo("<ul>" . $errorMessage . "</ul>\n");
-    }
+    <div class="container">
+        <div class="card card-container" style="background-color: black">
+            <img id="profile-img" class="profile-img-card" src="profile.png"/>
+            <span style="color: orangered"></span>
 
+            <form method = "post" class="form-signin">
+                <br>
+                <input type="text" class="form-control, inputEmail" name="username" placeholder="Username" required autofocus>
 
-}?>
+                <input type="password" class="form-control, inputPassword" name="password" placeholder="Password" required>
+                <a href="signup.php">Don't have an account? Sign up</a>
 
-<h1 style="text-align: center; color: #00b7bb; margin-top: 4%">Login</h1>
-<div class="container">
-
-    <div class="card card-container">
-
-        <img id="profile-img" class="profile-img-card" src="profile.png"/>
-
-        <span style="color: orangered"></span>
-
-        <form method = "post" class="form-signin">
-
-            <br>
-
-            <input type="text" class="form-control, inputEmail" name="username" placeholder="Username" required autofocus>
-
-            <input type="password" class="form-control, inputPassword" name="password" placeholder="Password" required>
-
-            <input name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" >
-        </form>
+                <input style="margin-top: 10px" name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" >
+            </form>
+        </div>
     </div>
-</div>
-
-
 </body>
 </html>
