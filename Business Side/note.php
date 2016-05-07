@@ -8,6 +8,7 @@
     <script src="note.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 </head>
 <body>
 
@@ -17,7 +18,7 @@
    $dbh = new PDO('mysql:host=localhost;dbname=injection', 'root', 'root');
 
     // Retrieve the user data from MySQL
-    $query = "SELECT title, date FROM note";
+    $query = "SELECT title FROM note";
     $stmt = $dbh->prepare($query);
     $stmt->execute();
     $results = $stmt ->fetchAll();
@@ -26,7 +27,7 @@
     echo '<table >';
             foreach($results as $row)
             {
-                echo '<tr style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['title'].'</td>';
+                echo '<tr class="title" style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['title'].'</td>';
             }
     echo '</table>'
     ?>
@@ -88,7 +89,28 @@ if(@$_POST['formSubmit'] == "Submit")
 
 </script>
 
-<div style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; ">
+<script>
+
+    $(document).ready(function(){
+        var toggle =0;
+        $(".title").click(function(){
+            if(toggle == 0){
+                $('#entry').hide();
+                $('#result').show();
+                toggle++;
+            }
+            else {
+                $('#entry').show();
+                $('#result').hide();
+                toggle--;
+            }
+            $('#header').html($(this).text());
+        });
+    });
+
+</script>
+
+<div id="entry" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; ">
     <br>
     <div style="background-color: pink;">
         <h2 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">New Entry</h2>
@@ -115,32 +137,17 @@ if(@$_POST['formSubmit'] == "Submit")
     </form>
 </div>
 
-<div id="" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; ">
+<div id="result" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; display: none; ">
     <br>
     <div style="background-color: pink;">
-        <h2 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">New Entry</h2>
+        <h2 id="header" style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">Test</h2>
     </div>
 
-    <form class="w3-container" method="post">
-        <p>
-            <label>Title</label>
-            <input class="w3-input" type="text" name="title">
-        </p>
-        <br>
-        <p>
-            <label>Date</label>
-            <input class="w3-input" type="date" name="date">
-        </p>
-        <br>
-        <p>
-            <label>Text</label>
-            <input class="w3-input" type="text" style="height: 100px;" name="text">
-        </p>
-        <br>
+    <div style="background-color: #00b7bb; height: 400px; width: 900px;">
 
-        <input name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" style="height: 50px; width: 300px; margin-left: 570px; border-radius: 10px;">
-    </form>
+    </div>
 </div>
+
 
 
 </body>
