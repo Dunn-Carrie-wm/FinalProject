@@ -8,11 +8,33 @@
     <script src="note.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 </head>
 <body>
 
 <div style="background-color: white; height: 700px; width: 370px; position: absolute; margin-left: 10px; margin-top: 10px;">
 <h1 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman">Notes</h1>
+    <?php
+   $dbh = new PDO('mysql:host=localhost;dbname=injection', 'root', 'root');
+
+    // Retrieve the user data from MySQL
+    $query = "SELECT title, text FROM note";
+    $stmt = $dbh->prepare($query);
+    $stmt->execute();
+    $results = $stmt ->fetchAll();
+
+
+    echo '<table >';
+    $text = array();
+    $count = 0;
+            foreach($results as $row)
+            {
+                echo '<tr id = "' . $count .'" class="title" style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['title'].'</td>';
+                array_push($text, $row['text']);
+                $count++;
+            }
+    echo '</table>'
+    ?>
 </div>
 <?php
 try {
@@ -71,7 +93,43 @@ if(@$_POST['formSubmit'] == "Submit")
 
 </script>
 
-<div style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; ">
+<script>
+
+    $(document).ready(function(){
+        var toggle =0;
+        $(".title").click(function(){
+            if(toggle == 0){
+                $('#entry').hide();
+                $('#result').show();
+                toggle++;
+
+                var text = [];
+
+                for(var counter = 0; counter <= <?= $count ?>; counter++)
+                {
+                    text[counter] = <?php
+                        $counter = 0;
+                        echo $text[$counter];
+                        $counter++;
+                        ?>
+                        alert(text[counter]);
+                }
+
+                $('#header').html($(this).text());
+                var index = $(this).attr('id');
+                $('#text').html(text[index]);
+            }
+            else {
+                $('#entry').show();
+                $('#result').hide();
+                toggle--;
+            }
+        });
+    });
+
+</script>
+
+<div id="entry" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; ">
     <br>
     <div style="background-color: pink;">
         <h2 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">New Entry</h2>
@@ -97,6 +155,18 @@ if(@$_POST['formSubmit'] == "Submit")
         <input name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" style="height: 50px; width: 300px; margin-left: 570px; border-radius: 10px;">
     </form>
 </div>
+
+<div id="result" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; display: none; ">
+    <br>
+    <div style="background-color: pink;">
+        <h2 id="header" style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">Test</h2>
+    </div>
+
+    <div id="text" style="background-color: #00b7bb; height: 400px; width: 900px;">
+
+    </div>
+</div>
+
 
 
 </body>

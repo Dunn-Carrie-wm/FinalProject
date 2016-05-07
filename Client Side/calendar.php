@@ -2,14 +2,14 @@
     require_once("connect.php");
     if(@$_POST['addMedicine'])
     {
-        $query = "INSERT INTO calendar (medicine_name, date, medicine_time) VALUES (:name, :date, :time)";
+        $query = "INSERT INTO calendar (medicine_name, date, medicine_time, user_id) VALUES (:name, :date, :time, :id)";
         $stmt = $dbh->prepare($query);
         $stmt->execute(array('name'=>$_POST['medicine'], 'date'=>date('Y/m/d'), 'time'=>$_POST['time']));
     }
 
     if(@$_POST['addActivity'])
     {
-        $query = "INSERT INTO calendar (activity_name, date) VALUES (:name, :date)";
+        $query = "INSERT INTO calendar (activity_name, date, user_id) VALUES (:name, :date, :id)";
         $stmt = $dbh->prepare($query);
         $stmt->execute(array('name'=>$_POST['activity'], 'date'=>date('Y/m/d')));
     }
