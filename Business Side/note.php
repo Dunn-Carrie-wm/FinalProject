@@ -144,6 +144,9 @@ if(@$_POST['formSubmit'] == "Submit")
     </div>
 
     <div style="background-color: #00b7bb; height: 400px; width: 900px;">
+        <?php
+
+        ?>
 
     </div>
 </div>
