@@ -15,31 +15,27 @@
 <div style="background-color: white; height: 700px; width: 370px; position: absolute; margin-left: 10px; margin-top: 10px;">
 <h1 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman">Notes</h1>
     <?php
-   $dbh = new PDO('mysql:host=localhost;dbname=injection', 'root', 'root');
+    require_once("../Client Side/connect.php");
 
     // Retrieve the user data from MySQL
-    $query = "SELECT title FROM note";
+    $query = "SELECT title, text FROM note";
     $stmt = $dbh->prepare($query);
     $stmt->execute();
-    $results = $stmt ->fetchAll();
-
+    $results = $stmt->fetchAll();
 
     echo '<table >';
+    $text = array();
+    $count = 0;
             foreach($results as $row)
             {
-                echo '<tr class="title" style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['title'].'</td>';
+                echo '<tr id = "' . $count .'" class="title" style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['title'].'</td>';
+                array_push($text, $row['text']);
+                $count++;
             }
     echo '</table>'
     ?>
 </div>
 <?php
-try {
-    $dbh = new PDO('mysql:host=127.0.0.1;dbname=injection', 'root', 'root');
-
-} catch (PDOException $e) {
-    print "Error!: " . $e->getMessage() . "<br/>";
-    die();
-}
 if(@$_POST['formSubmit'] == "Submit")
 {
     $errorMessage = "";
@@ -57,19 +53,16 @@ if(@$_POST['formSubmit'] == "Submit")
     }
 
     $stmt = $dbh->prepare("INSERT INTO note (title, date, text ) VALUES (?, ?, ?)");
-
     $result = $stmt->execute(array($_POST['title'], $_POST['date'], $_POST['text']));
 
-    if(!$result){
-        print_r($stmt->errorInfo());
-    }
     if(!empty($errorMessage))
     {
         echo("<p>There was an error with your form:</p>\n");
         echo("<ul>" . $errorMessage . "</ul>\n");
     }
-
-}?>
+    header("Location: note.php");
+}
+?>
 <nav>
     <div class="navToggle">
         <div class="icon"></div>
@@ -92,22 +85,34 @@ if(@$_POST['formSubmit'] == "Submit")
 <script>
 
     $(document).ready(function(){
-        var toggle =0;
+        var toggle = 0;
         $(".title").click(function(){
-            if(toggle == 0){
+            if(toggle == 0)
+            {
                 $('#entry').hide();
                 $('#result').show();
                 toggle++;
+                var text = [];
+
+                <?php
+                    foreach($text as $return)
+                    {
+                 ?>
+                        text.push("<?= $return;?>");
+                <?php } ?>
+
+                $('#header').html($(this).text());
+                var index = $(this).attr('id');
+                $('#text').html(text[index]);
             }
-            else {
+            else
+            {
                 $('#entry').show();
                 $('#result').hide();
                 toggle--;
             }
-            $('#header').html($(this).text());
         });
     });
-
 </script>
 
 <div id="entry" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; ">
@@ -118,18 +123,18 @@ if(@$_POST['formSubmit'] == "Submit")
 
     <form class="w3-container" method="post">
         <p>
-            <label>Title</label>
-            <input class="w3-input" type="text" name="title">
+            <label for="title">Title</label>
+            <input id="title" class="w3-input" type="text" name="title">
         </p>
             <br>
         <p>
-            <label>Date</label>
-            <input class="w3-input" type="date" name="date">
+            <label for="date">Date</label>
+            <input id="date" class="w3-input" type="date" name="date">
         </p>
             <br>
         <p>
-            <label>Text</label>
-            <input class="w3-input" type="text" style="height: 100px;" name="text">
+            <label for="text1">Text</label>
+            <input id="text1" class="w3-input" type="text" style="height: 100px;" name="text">
         </p>
         <br>
 
@@ -143,15 +148,9 @@ if(@$_POST['formSubmit'] == "Submit")
         <h2 id="header" style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">Test</h2>
     </div>
 
-    <div style="background-color: #00b7bb; height: 400px; width: 900px;">
-        <?php
-
-        ?>
+    <div id="text" style="background-color: #00b7bb; height: 400px; width: 900px;">
 
     </div>
 </div>
-
-
-
 </body>
 </html>

@@ -8,6 +8,7 @@ if (toggle == 0){
         $(".title").click(function(){
             $('#entry').hide();
             $('#result').show();
+
         });
         toggle = 1;
     });}

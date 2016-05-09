@@ -177,7 +177,7 @@
 
                         echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['firstName'] . "</p>";
                         echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['lastName'] . "</p>";
-                        echo "<p style='margin-left: 250px; font-size: x-large'>Type: " . $result['type'] . "</p>";
+                        echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['type'] . "</p>";
 
                         $results = draw_calendar($month,$year, $dbh, $monthName);
                         echo $results[0];

@@ -21,10 +21,13 @@
         setcookie('user_id', '', time() - 3600);
         setcookie('username', '', time() - 3600);
 
-        // Redirect to the login page
-        header('Location: login.php');
-
         unset($_COOKIE['user_id']);
         setcookie('user_id', '', time() - 3600, '/'); // empty value and old timestamp
         unset($_SESSION['user_id']);
+
+        // Redirect to the login page
+        header('Location: login.php');
     }
+    else
+        // Redirect to the login page
+        header('Location: login.php');
