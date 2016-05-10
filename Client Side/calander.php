@@ -24,7 +24,7 @@
 
   <script src="cal.js"></script>
 
-  
+  //this is a test comment
   <div id="result" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; display: none; ">
     <br>
     <div style="background-color: pink;">
@@ -36,8 +36,6 @@
 
     </div>
   </div>
-
-
 
 </body>
 
