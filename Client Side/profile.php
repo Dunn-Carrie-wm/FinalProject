@@ -164,17 +164,19 @@
             </script>
 
             <div>
+                <?php
+                    $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
+                    $stmt = $dbh ->prepare($query);
+                    $stmt->execute();
+                    $result = $stmt->fetch();
+                ?>
+
                 <div style="width: 15%; right: 0; top: 0; position: absolute">
-                    <img src="profile.png" style="width: 80%; float: right; top: 0; border: solid darkslategray">
+                    <img src='../images/<?= $result['picture'] ?>' style="width: 80%; float: right; top: 0; border: solid darkslategray">
                 </div>
 
                 <div style="margin-top: 10px">
                     <?php
-                        $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
-                        $stmt = $dbh ->prepare($query);
-                        $stmt->execute();
-                        $result = $stmt->fetch();
-
                         echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['firstName'] . "</p>";
                         echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['lastName'] . "</p>";
                         echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['type'] . "</p>";

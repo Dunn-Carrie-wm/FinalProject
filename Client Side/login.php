@@ -101,7 +101,7 @@
 
     <div class="container">
         <div class="card card-container" style="background-color: black">
-            <img id="profile-img" class="profile-img-card" src="profile.png"/>
+            <img id="profile-img" class="profile-img-card" src="../images/profile.png"/>
             <span style="color: orangered"></span>
 
             <form method = "post" class="form-signin">

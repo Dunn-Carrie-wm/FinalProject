@@ -23,7 +23,7 @@
     $stmt->execute();
     $results = $stmt->fetchAll();
 
-    echo '<table >';
+    echo '<table>';
     $text = array();
     $count = 0;
             foreach($results as $row)
