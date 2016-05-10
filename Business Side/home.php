@@ -24,7 +24,7 @@ $stmt = $dbh->prepare($query);
 $stmt->execute();
 
 $count =$stmt->rowCount();
-//?>
+?>
 
 <!DOCTYPE html>
 <html>

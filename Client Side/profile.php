@@ -26,7 +26,7 @@
     {
         require_once("connect.php");
         /* draw table */
-        echo '<h2 style="text-align: center;" class="calendar">' . $name . ' ' . $year . '</h2>';
+        echo '<h2 style="text-align: center; font-size: 40px;" class="calendar">' . $name . ' ' . $year . '</h2>';
         $calendar = '<table cellpadding="0" cellspacing="0" class="calendar">';
 
         /* table headings */
@@ -164,24 +164,26 @@
             </script>
 
             <div>
-                <div style="width: 15%; right: 0; top: 0; position: absolute">
-                    <img src="profile.png" style="width: 80%; float: right; top: 0; border: solid darkslategray">
+                <div style="width: 1400px; position: absolute;">
+                    <img src="profile.png" style="width: 15%; float: left; top: 0; border: solid darkslategray; margin-left: 150px; position: absolute;">
                 </div>
 
-                <div style="margin-top: 10px">
+                <div style="margin-top: 10px;">
                     <?php
                         $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
                         $stmt = $dbh ->prepare($query);
                         $stmt->execute();
                         $result = $stmt->fetch();
 
-                        echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['firstName'] . "</p>";
-                        echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['lastName'] . "</p>";
-                        echo "<p style='margin-left: 250px; font-size: x-large'>" . $result['type'] . "</p>";
+                        echo "<p style='margin-left: 375px; font-size: x-large'>" . $result['firstName'] . ' '. ' ' .$result['lastName'] . "</p>";
 
-                        $results = draw_calendar($month,$year, $dbh, $monthName);
-                        echo $results[0];
+                        echo "<p style='margin-left: 375px; font-size: x-large'>" . $result['type'] . "</p>";
                     ?>
+                </div>
+                <div id="cal" style="height: 300px; margin-top: 130px;">
+                   <?php $results = draw_calendar($month,$year, $dbh, $monthName);
+                    echo $results[0];
+                   ?>
                 </div>
 
                 <div style="margin-left: 350px;">
