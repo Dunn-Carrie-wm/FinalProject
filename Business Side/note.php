@@ -83,7 +83,6 @@ if(@$_POST['formSubmit'] == "Submit")
 </script>
 
 <script>
-
     $(document).ready(function(){
         var toggle = 0;
         $(".title").click(function(){
