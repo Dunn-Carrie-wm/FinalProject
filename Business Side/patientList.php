@@ -74,7 +74,7 @@ $users = $stmt->fetchAll();
                 <td><?= $user['lastName']; ?></td>
 
                 <?php
-                echo '<td><a href="../Client%20Side/profile.php?id=' . $user['id'] . '&amp;date=' .
+                echo '<td><a href="../Client%20Side/profile.php?id=' . $user['id'] .
                     '&amp;name=' . $user['firstName'] . " " . $user['lastName'] . '">View Profile</a>';
                 ?>
             </tr>
