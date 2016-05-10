@@ -164,19 +164,24 @@
             </script>
 
             <div>
-                <div style="width: 1400px; position: absolute;">
-                    <img src="profile.png" style="width: 15%; float: left; top: 0; border: solid darkslategray; margin-left: 150px; position: absolute;">
-                </div>
+                <?php
+                    if(isset($_GET['id']) && isset($_GET['name']))
+                        $query = "SELECT * FROM client where id = " . $_GET['id'] ."";
+                    else
+                        $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
+
+                    $stmt = $dbh ->prepare($query);
+                    $stmt->execute();
+                    $result = $stmt->fetch();
+                ?>
+
+                <div style="width: 15%; right: 0; top: 0; position: absolute">
+                    <img src='../images/<?= $result['picture'] ?>' style="width: 15%; float: left; top: 0; border: solid darkslategray; margin-left: 150px; position: absolute;">
+                <div>
 
                 <div style="margin-top: 10px;">
                     <?php
-                        $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
-                        $stmt = $dbh ->prepare($query);
-                        $stmt->execute();
-                        $result = $stmt->fetch();
-
                         echo "<p style='margin-left: 375px; font-size: x-large'>" . $result['firstName'] . ' '. ' ' .$result['lastName'] . "</p>";
-
                         echo "<p style='margin-left: 375px; font-size: x-large'>" . $result['type'] . "</p>";
                     ?>
                 </div>
