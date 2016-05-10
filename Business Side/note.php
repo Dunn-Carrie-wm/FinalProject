@@ -149,7 +149,7 @@ if(@$_POST['formSubmit'] == "Submit")
         <h2 id="header" style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">Test</h2>
     </div>
 
-    <div id="text" style=" height: 400px; width: 900px; text-align: center; font-size: 30px; border: dashed; border-color: black;">
+    <div id="text" style=" height: 400px; width: 900px; text-align: center; font-size: 30px; border: dashed; border-color: black">
 
 
     </div>
