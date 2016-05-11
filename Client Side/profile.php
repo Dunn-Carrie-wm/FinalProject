@@ -1,5 +1,10 @@
 <?php
     require_once("connect.php");
+    define('MM_UPLOADPATH', '../images/');
+    define('MM_MAXFILESIZE', 32768);      // 32 KB
+    define('MM_MAXIMGWIDTH', 120);        // 120 pixels
+    define('MM_MAXIMGHEIGHT', 120);       // 120 pixels
+
     if(@$_POST['addMedicine'])
     {
         $query = "INSERT INTO calendar (medicine_name, date, medicine_time) VALUES (:name, :date, :time)";
@@ -21,96 +26,83 @@
         $stmt->execute(array('id'=>$_POST['remove']));
     }
 
-    /* draws a calendar */
-    function draw_calendar($month,$year, $dbh, $name)
+
+    if (isset($_POST['submit']))
     {
-        require_once("connect.php");
-        /* draw table */
-        echo '<h2 style="text-align: center; font-size: 40px;" class="calendar">' . $name . ' ' . $year . '</h2>';
-        $calendar = '<table cellpadding="0" cellspacing="0" class="calendar">';
+        $old_picture = trim($_POST['old_picture']);
+        $new_picture = trim($_FILES['new_picture']['name']);
+        $new_picture_type = $_FILES['new_picture']['type'];
+        $new_picture_size = $_FILES['new_picture']['size'];
+        @list($new_picture_width, $new_picture_height) = getimagesize($_FILES['new_picture']['tmp_name']);
+        $error = false;
 
-        /* table headings */
-        $headings = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-        $calendar.= '<tr class="calendar-row"><td class="calendar-day-head">'.implode('</td><td class="calendar-day-head">',$headings).'</td></tr>';
-
-        /* days and weeks vars now ... */
-        $running_day = date('w',mktime(0,0,0,$month,1,$year));
-        $days_in_month = date('t',mktime(0,0,0,$month,1,$year));
-        $days_in_this_week = 1;
-        $day_counter = 0;
-
-        /* row for week one */
-        $calendar.= '<tr class="calendar-row">';
-
-        /* print "blank" days until the first of the current week */
-        for($x = 0; $x < $running_day; $x++)
+        // Validate and move the uploaded picture file, if necessary
+        if (!empty($new_picture))
         {
-            $calendar .= '<td class="calendar-day-np"> </td>';
-            $days_in_this_week++;
-        }
-
-        /* keep going with days.... */
-        for($list_day = 1; $list_day <= $days_in_month; $list_day++)
-        {
-            $calendar .= '<td class="calendar-day" id=" ' . $list_day . '">';
-            /* add in the day number */
-            $calendar .= '<div class="day-number">' . $list_day . '</div>';
-
-            /** QUERY THE DATABASE FOR AN ENTRY FOR THIS DAY !!  IF MATCHES FOUND, PRINT THEM !! **/
-            $query = "SELECT medicine_name FROM calendar WHERE date = :date AND medicine_name != '' ORDER BY medicine_time";
-            $stmt = $dbh->prepare($query);
-            $stmt->execute(array('date'=> $year . '-' . $month . '-' . $list_day));
-            $count = $stmt->rowCount();
-
-            if($count > 0)
+            if ((($new_picture_type == 'image/gif') || ($new_picture_type == 'image/jpeg') || ($new_picture_type == 'image/pjpeg') ||
+                    ($new_picture_type == 'image/png')) && ($new_picture_size > 0))
             {
-                $results = $stmt->fetchAll();
-                foreach($results as $result)
+                if (@$_FILES['file']['error'] == 0)
                 {
-                    $response = $result['medicine_name'];
-                    $calendar .= str_repeat('<span style="margin-top: 0">' . $response . '</span> <br>', 1);
+                    // Move the file to the target upload folder
+                    $target = MM_UPLOADPATH . basename($new_picture);
+                    if (move_uploaded_file($_FILES['new_picture']['tmp_name'], $target)) {
+                        // The new picture file move was successful, now make sure any old picture is deleted
+                        if (!empty($old_picture) && ($old_picture != $new_picture) && ($old_picture != "profile.png")) {
+                            @unlink(MM_UPLOADPATH . $old_picture);
+                        }
+                    }
+                    else {
+                        // The new picture file move failed, so delete the temporary file and set the error flag
+                        @unlink($_FILES['new_picture']['tmp_name']);
+                        $error = true;
+                        echo '<p class="error">Sorry, there was a problem uploading your picture.</p>';
+                    }
                 }
-                $date = $year . '-' . $month . '-' . $list_day;
             }
+            else {
+                // The new picture file is not valid, so delete the temporary file and set the error flag
+                @unlink($_FILES['new_picture']['tmp_name']);
+                $error = true;
+                echo '<p class="error">Your picture must be a GIF, JPEG, or PNG image file no greater than ' . (MM_MAXFILESIZE / 1024) .
+                    ' KB and ' . MM_MAXIMGWIDTH . 'x' . MM_MAXIMGHEIGHT . ' pixels in size.</p>';
+            }
+        }
 
-            $calendar .= '</td>';
-
-            if ($running_day == 6)
+        // Update the profile data in the database
+        if (!$error)
+        {
+            // Only set the picture column if there is a new picture
+            if (!empty($new_picture))
             {
-                $calendar .= '</tr>';
-                if (($day_counter + 1) != $days_in_month) {
-                    $calendar .= '<tr class="calendar-row">';
-                }
-
-                $running_day = -1;
-                $days_in_this_week = 0;
+                $query = "UPDATE client SET picture = :picture WHERE id = :user_id";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute(array("picture"=>$new_picture, "user_id"=>$_SESSION['user_id']));
             }
 
-            $days_in_this_week++;
-            $running_day++;
-            $day_counter++;
+            // Confirm success with the user
+            echo '<p>Your profile has been successfully updated.</p>';
+            $dbh = null;
         }
+    } // End of check for form submission
+    else
+    {
+        // Grab the profile data from the database
+        if(isset($_GET['id']) && isset($_GET['name']))
+            $query = "SELECT * FROM client where id = " . $_GET['id'] ."";
+        else
+            $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
 
-        /* finish the rest of the days in the week */
-        if($days_in_this_week < 8) {
-            for ($x = 1; $x <= (8 - $days_in_this_week); $x++) {
-                $calendar .= '<td class="calendar-day-np"> </td>';
-            }
-        }
+        $stmt = $dbh ->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch();
 
-        /* final row */
-        $calendar.= '</tr>';
+        if ($result != NULL)
+            $old_picture = $result['picture'];
 
-        /* end the table */
-        $calendar.= '</table>';
-
-        /* all done, return result */
-        return array($calendar, @$date);
+        else
+            echo '<p class="error">There was a problem accessing your profile.</p>';
     }
-
-    $month = date('m', strtotime('0 month'));
-    $year = date('Y');
-    $monthName = date('F', mktime(0, 0, 0, $month, 10));
 ?>
 
 <!DOCTYPE html>
@@ -164,19 +156,15 @@
             </script>
 
             <div>
-                <?php
-                    if(isset($_GET['id']) && isset($_GET['name']))
-                        $query = "SELECT * FROM client where id = " . $_GET['id'] ."";
-                    else
-                        $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
-
-                    $stmt = $dbh ->prepare($query);
-                    $stmt->execute();
-                    $result = $stmt->fetch();
-                ?>
-
                 <div style="width: 15%; right: 0; top: 0; position: absolute">
                     <img src='../images/<?= $result['picture'] ?>' style="width: 15%; float: left; top: 0; border: solid darkslategray; margin-left: 150px; position: absolute;">
+
+                    <form method="post">
+                        <label for="new_picture">Picture:</label>
+                        <input type="file" id="new_picture" name="new_picture" />
+                        <input type="hidden" name="old_picture" value="<?php if (!empty($old_picture)) echo $old_picture; ?>" />
+                        <input type="submit" value="Change Picture" name="submit" />
+                    </form>
                 <div>
 
                 <div style="margin-top: 10px;">
