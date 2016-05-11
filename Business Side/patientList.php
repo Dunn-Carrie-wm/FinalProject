@@ -40,6 +40,7 @@ $users = $stmt->fetchAll();
         </div>
 
         <ul>
+            <li><a href="home.php">Home Page</a></li>
             <li><a href="note.php">Note Pad</a></li>
             <li><a href="reminderinput.php">Reminder</a></li>
             <li><a href="general.php">General Facts</a></li>

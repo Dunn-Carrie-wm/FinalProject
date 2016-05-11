@@ -89,6 +89,26 @@
 </head>
 
 <body>
+<?php
+if(isset($_GET['id'])) {
+    ?>
+    <nav>
+        <div class="navToggle">
+            <div class="icon"></div>
+        </div>
+        <ul>
+            <li><a href="../Business%20Side/home.php">Home Page</a></li>
+            <li><a href="../Business%20Side/patientList.php">Patient List</a></li>
+            <li><a href="../Business%20Side/note.php">Note Pad</a></li>
+            <li><a href="../Business%20Side/reminderinput.php">Reminder</a></li>
+            <li><a href="../Business%20Side/general.php">General Facts</a></li>
+            <li><a href="../Business%20Side/logout.php">Log Out</a></li>
+        </ul>
+    </nav>';
+<?php
+}
+
+else{ ?>
     <nav>
         <div class="navToggle">
             <div class="icon"></div>
@@ -101,6 +121,10 @@
             <li><a href="logout.php">Log Out</a></li>
         </ul>
     </nav>
+<?php
+}
+?>
+
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script>
         $(".navToggle").click (function(){
