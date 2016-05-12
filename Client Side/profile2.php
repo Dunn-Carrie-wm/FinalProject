@@ -151,11 +151,6 @@ else{ ?>
 
     <div id="name" style="border: solid; border-color: black; height: 250px; width: 900px; margin-left: 410px; margin-top: -250px;">
        <?php
-            $query = "SELECT * FROM client";
-
-            $stmt = $dbh->prepare($query);
-            $stmt->execute();
-            $result = $stmt->fetch();
             echo"<br> <br> <br>";
 
             echo "<p style='font-size: 50px; margin-left: 20px;'>" . $result['firstName'] . ' ' . $result['lastName'] . "</p>";
