@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <title>Note Pad</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="note.css">
-    <script src="note.js"></script>
+    <link rel="stylesheet" href="../Css/note.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -15,12 +14,12 @@
 <div style="background-color: white; height: 700px; width: 370px; position: absolute; margin-left: 10px; margin-top: 10px;">
 <h1 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman">Notes</h1>
     <?php
-    require_once("../Client Side/connect.php");
+    require_once("connect.php");
 
     // Retrieve the user data from MySQL
-    $query = "SELECT title, text FROM note";
+    $query = "SELECT title, text FROM notec WHERE user_id = :id";
     $stmt = $dbh->prepare($query);
-    $stmt->execute();
+    $stmt->execute(array('id'=>$_SESSION['user_id']));
     $results = $stmt->fetchAll();
 
     echo '<table>';
@@ -52,15 +51,15 @@ if(@$_POST['formSubmit'] == "Submit")
         $errorMessage = "<li>You forgot to enter your note.</li>";
     }
 
-    $stmt = $dbh->prepare("INSERT INTO notec (title, date, text ) VALUES (?, ?, ?)");
-    $result = $stmt->execute(array($_POST['title'], $_POST['date'], $_POST['text']));
+    $stmt = $dbh->prepare("INSERT INTO notec (title, date, text, user_id) VALUES (?, ?, ?, ?)");
+    $result = $stmt->execute(array($_POST['title'], $_POST['date'], $_POST['text'], $_SESSION['user_id']));
 
     if(!empty($errorMessage))
     {
         echo("<p>There was an error with your form:</p>\n");
         echo("<ul>" . $errorMessage . "</ul>\n");
     }
-    header("Location: note.php");
+    header("Location: notec.php");
 }
 ?>
 <nav>
@@ -149,7 +148,6 @@ if(@$_POST['formSubmit'] == "Submit")
     </div>
 
     <div id="text" style=" height: 400px; width: 900px; text-align: center; font-size: 30px; border: dashed; border-color: black">
-
 
     </div>
 </div>

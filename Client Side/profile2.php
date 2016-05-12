@@ -127,7 +127,7 @@ else{ ?>
             <div class="icon"></div>
         </div>
         <ul>
-            <li><a href="note.php">Note Pad</a></li>
+            <li><a href="notec.php">Note Pad</a></li>
             <li><a href="reminderinput.php">Reminder</a></li>
             <li><a href="general.php">General Facts</a></li>
             <li><a href="logout.php">Log Out</a></li>
