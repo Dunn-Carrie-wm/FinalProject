@@ -55,7 +55,7 @@
             print_r($stmt->errorInfo());
             $_SESSION['user_id'] = $userinfo['id'];
 
-            header("Location: profile.php");
+            header("Location: profile2.php");
         }
 
         if(!empty($errorMessage))
@@ -73,7 +73,7 @@
         <ul>
             <?php
             if(isset($_SESSION['user_id']))
-                echo "<li><a href=\"profile.php\">Profile</a></li>";
+                echo "<li><a href=\"profile2.php\">Profile</a></li>";
             else
                 echo "<li><a href=\"login.php\">Profile</a></li>";
             ?>

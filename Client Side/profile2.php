@@ -104,7 +104,7 @@ if(isset($_GET['id'])) {
             <li><a href="../Business%20Side/general.php">General Facts</a></li>
             <li><a href="../Business%20Side/logout.php">Log Out</a></li>
         </ul>
-    </nav>';
+    </nav>;
 <?php
 }
 
@@ -114,7 +114,6 @@ else{ ?>
             <div class="icon"></div>
         </div>
         <ul>
-            <li><a href="patientList.php">Patient List</a></li>
             <li><a href="note.php">Note Pad</a></li>
             <li><a href="reminderinput.php">Reminder</a></li>
             <li><a href="general.php">General Facts</a></li>
