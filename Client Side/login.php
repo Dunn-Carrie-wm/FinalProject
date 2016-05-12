@@ -55,7 +55,7 @@
             print_r($stmt->errorInfo());
             $_SESSION['user_id'] = $userinfo['id'];
 
-            header("Location: profile.php");
+            header("Location: profile2.php");
         }
 
         if(!empty($errorMessage))

@@ -11,8 +11,13 @@
 
     else
     {
-        $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
-        $id = $_SESSION['user_id'];
+        if(isset($_SESSION['user_id']))
+        {
+            $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
+            $id = $_SESSION['user_id'];
+        }
+        else
+            header("Location: login.php");
     }
 
     $stmt = $dbh->prepare($query);
@@ -24,6 +29,13 @@
         $query = "INSERT INTO calendar (medicine_name, date, medicine_time, activity_name, user_id) VALUES (:name, :date, :time, :activity, :id)";
         $stmt = $dbh->prepare($query);
         $stmt->execute(array('name'=>$_POST['medicine'], 'date'=>date('Y/m/d'), 'time'=>$_POST['time'], 'activity'=>$_POST['activity'], 'id'=>$id));
+    }
+
+    if(@$_POST['remove'])
+    {
+        $query = "DELETE FROM calendar WHERE calendar_id = :id";
+        $stmt = $dbh->prepare($query);
+        $stmt->execute(array('id'=>$_POST['remove']));
     }
 ?>
 
@@ -37,6 +49,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="cal.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <style>
         .close
         {
@@ -110,7 +123,7 @@
     </script>
 
     <div id="profile" style="height: 250px; width: 250px; margin-left: 150px; margin-top: 20px; border: dashed; border-color: #00b7bb; ">
-        <img src='../images/<?= $result['picture'] ?>' style="height: 220px; width: 220px; margin-top: -5px; margin-left: 15px;">
+        <img src='../images/<?= $result['picture'] ?>' style="height: 200px; width: 200px; margin-top: 5px; margin-left: 15px;">
     </div>
 
     <div id="name" style="border: solid; border-color: black; height: 250px; width: 900px; margin-left: 410px; margin-top: -250px;">
@@ -160,6 +173,7 @@
                     <div>
                         <button class="close">&#10006;</button>
 
+                        <form method="post">
                             <table class="table" style="margin-top: 15px">
                                 <tr>
                                     <th>Medication Name</th>
@@ -174,14 +188,23 @@
 
                                 foreach($info as $result)
                                 {
-                                    $time = new DateTime($result['medicine_time']);
                                     echo '<tr><td>' . $result['medicine_name'] . '</td>';
-                                    echo '<td>' . $time->format('h:i a') . '</td>';
-                                    echo '<td>' . $result['activity_name'] . '</td></tr>';
+                                    if($result['medicine_time'] == 0)
+                                    {
+                                        echo "<td></td>";
+                                    }
+                                    else
+                                    {
+                                        $time = new DateTime($result['medicine_time']);
+                                        echo '<td>' . $time->format('h:i a') . '</td>';
+                                    }
+                                    echo '<td>' . $result['activity_name'] . '</td>';
+                                    echo '<td> <button class="delete" type="submit" name="remove" value="'. $result['calendar_id'] .'">-</button></td></tr>';
                                 }
                                 ?>
                             </table>
-                        </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -193,8 +216,8 @@
             <fieldset>
                 <h2 class="fs-title">Input Today's Data</h2>
                 <h3 class="fs-subtitle">Today's Date</h3>
-                <input type="text" name="medicine" placeholder="Medication" />
-                <input type="time" name="time" placeholder="Time Taken" />
+                <input id="medicine" type="text" name="medicine" placeholder="Medication" />
+                <input id="time" type="time" name="time" placeholder="Time Taken" />
 
                 <input list="activities" name="activity" placeholder="Activities">
                 <datalist id="activities">
@@ -205,7 +228,7 @@
                     <option value="Biking">
                 </datalist>
 
-                <input type="submit" name="add" value="+">
+                <input type="submit" name="add" id="add" value="+">
             </fieldset>
         </form>
     </div>
