@@ -5,7 +5,7 @@
     // Grab the profile data from the database
     if(isset($_GET['id']) && isset($_GET['name']))
     {
-        $query = "SELECT * FROM client where id = " . $_GET['id'] ."";
+        $query = "SELECT * FROM client WHERE id = " . $_GET['id'] ."";
         $id = $_GET['id'];
     }
 
@@ -13,7 +13,7 @@
     {
         if(isset($_SESSION['user_id']))
         {
-            $query = "SELECT * FROM client where id = " . $_SESSION['user_id'] ."";
+            $query = "SELECT * FROM client WHERE id = " . $_SESSION['user_id'] ."";
             $id = $_SESSION['user_id'];
         }
         else
@@ -199,9 +199,9 @@ else{ ?>
                                     <th>Activity Name</th>
                                 </tr>
                                 <?php
-                                $query = "SELECT * FROM calendar WHERE date = :date ORDER BY medicine_time";
+                                $query = "SELECT * FROM calendar WHERE date = :date AND user_id = :id ORDER BY medicine_time";
                                 $stmt = $dbh->prepare($query);
-                                $stmt->execute(array('date'=>$date));
+                                $stmt->execute(array('date'=>$date, 'id'=>$id));
                                 $info = $stmt->fetchAll();
 
                                 foreach($info as $result)
