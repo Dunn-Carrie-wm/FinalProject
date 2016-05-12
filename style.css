@@ -2,12 +2,14 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    background-color: lightblue;
 }
 body {
     background-color: lightblue;
     font-family: 'Roboto', sans-serif;
     position: relative;
     background-attachment: fixed;
+
 
 }
 nav {
@@ -18,8 +20,7 @@ nav {
     transition-duration: 0.5s;
     transition-timing-function: swing;
     overflow: hidden;
-    color:white;
-
+    color:lightblue;
 }
 nav.open {
     height: 300px;
@@ -35,7 +36,7 @@ nav ul li a {
     padding: 10px 0;
     display: inline-block;
     text-decoration: none;
-    color: white;
+    color: lightblue;
     font-size: 150%;
 }
 .navToggle {
@@ -53,7 +54,7 @@ nav ul li a {
     height: 2px;
     top: 30px;
     left: 15px;
-    background-color: white;
+    background-color: lightblue;
 
 }
 .navToggle .icon:before,

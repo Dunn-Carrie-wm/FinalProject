@@ -24,15 +24,15 @@ $dbc = new PDO('mysql:host=localhost;dbname=injection', 'root','root');
             margin: auto;
         }
     </style>
-    <!---------->
+
 
 </head>
 
 <body style="background-color: lightblue">
-<div id="#text">
+<div style="background-color: lightblue" id="#text">
     <!--NavBar-->
-    <nav style="color: lightblue;">
-        <div class="navToggle" id="AboutUs">
+    <nav style="background-color: lightblue;">
+        <div  style="background-color: lightblue;" class="navToggle" id="AboutUs">
             <div class="icon"></div>
         </div>
         <ul>
@@ -50,7 +50,7 @@ $dbc = new PDO('mysql:host=localhost;dbname=injection', 'root','root');
         $("nav").toggleClass("open");
     });
 </script>
-<!--------->
+<!-----test comment--->
 
 <div id="Text">
     <h1 style="color: white; margin-left: 200px;"> Injection </h1>
