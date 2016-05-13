@@ -25,54 +25,70 @@
 </head>
 <body>
 <?php
-    require_once("connect.php");
+    require_once("../connect.php");
+
+    define('MM_UPLOADPATH', '../images/');
+    define('MM_MAXFILESIZE', 32768);      // 32 KB
+    define('MM_MAXIMGWIDTH', 120);        // 120 pixels
+    define('MM_MAXIMGHEIGHT', 120);       // 120 pixels
 
     if(@$_POST['formSubmit'] == "Submit")
     {
-        $errorMessage = "";
+        $picture = $_FILES['picture']['name'];
+        $picture_type = $_FILES['picture']['type'];
+        $picture_size = $_FILES['picture']['size'];
+        @list($picture_width, $picture_height) = getimagesize($_FILES['picture']['tmp_name']);
+        $error = false;
 
-        $stmt = $dbh->prepare("INSERT INTO client (firstName, lastName, username, email, password, type) VALUES (?, ?, ?, ?, ?, ?)");
-        $result = $stmt->execute(array($_POST['firstName'], $_POST['lastName'], $_POST['username'], $_POST['email'], $_POST['password'], $_POST['type']));
-        if(!$result){
-            print_r($stmt->errorInfo());
-        }
-        else{
-            $msg = 'Thank you for subscribing to Injection.';
-            $from = 'admin@injection.com';
-            mail($_POST['email'], 'Injection' , $msg, 'From:' . $from);
-            header("Location: login.php");
-        }
-
-        if(!empty($errorMessage))
+        // Validate and move the uploaded picture file, if necessary
+        if (!empty($picture))
         {
-            echo("<p>There was an error with your form:</p>\n");
-            echo("<ul>" . $errorMessage . "</ul>\n");
+            if ((($picture_type == 'image/gif') || ($picture_type == 'image/jpeg') || ($picture_type == 'image/pjpeg') ||
+                    ($picture_type == 'image/png')) && ($picture_size > 0) && ($picture_size <= MM_MAXFILESIZE))
+            {
+                if (@$_FILES['file']['error'] == 0)
+                {
+                    // Move the file to the target upload folder
+                    $target = MM_UPLOADPATH . basename($picture);
+
+                    if (!(move_uploaded_file($_FILES['picture']['tmp_name'], $target))) {
+                        // The new picture file move failed, so delete the temporary file and set the error flag
+                        @unlink($_FILES['picture']['tmp_name']);
+                        $error = true;
+                        echo '<p style="text-align: center;">Sorry, there was a problem uploading your picture.</p>';
+                    }
+                    else
+                    {
+                        $stmt = $dbh->prepare("INSERT INTO client (firstName, lastName, username, email, password, type, picture) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                        $result = $stmt->execute(array($_POST['firstName'], $_POST['lastName'], $_POST['username'], $_POST['email'], $_POST['password'], $_POST['type'], $picture));
+                        if(!$result){
+                            print_r($stmt->errorInfo());
+                        }
+                        else{
+                            $msg = 'Thank you for subscribing to Injection.';
+                            $from = 'admin@injection.com';
+                            mail($_POST['email'], 'Injection' , $msg, 'From:' . $from);
+                            header("Location: login.php");
+                        }
+
+                        if(!empty($errorMessage))
+                        {
+                            echo("<p>There was an error with your form:</p>\n");
+                            echo("<ul>" . $errorMessage . "</ul>\n");
+                        }
+                    }
+                }
+            }
+            else {
+                // The new picture file is not valid, so delete the temporary file and set the error flag
+                @unlink($_FILES['picture']['tmp_name']);
+                $error = true;
+                echo '<p style="text-align: center">Your picture must be a GIF, JPEG, or PNG image file no greater than ' . (MM_MAXFILESIZE / 1024) .
+                    ' KB.</p>';
+            }
         }
     }
 ?>
-    <nav>
-        <div class="navToggle">
-            <div class="icon"></div>
-        </div>
-        <ul>
-            <?php
-            if(isset($_SESSION['user_id']))
-                echo "<li><a href=\"profile.php\">Profile</a></li>";
-            else
-                echo "<li><a href=\"login.php\">Profile</a></li>";
-            ?>
-            <li><a href="noteinput.php">Note Pad</a></li>
-            <li><a href="reminderinput.php">Reminder</a></li>
-            <li><a href="general.php">General Facts</a></li>
-
-            <?php
-            if(isset($_SESSION['user_id']))
-                echo "<li><a href=\"logout.php\">Log Out</a></li>";
-            else
-                echo "<li><a href=\"login.php\">Log In</a></li>";
-            ?>
-        </ul>
-    </nav>
 
     <script>
         $(".navToggle").click (function(){
@@ -86,16 +102,18 @@
 
     <div class="card card-container" style="background-color: black">
 
-        <img id="profile-img" class="profile-img-card" src="profile.png"/>
+        <img id="profile-img" class="profile-img-card" src="../images/profile.png"/>
 
         <span style="color: orangered"></span>
 
-        <form id="signUp" method="post" class="form-signin">
+        <form enctype="multipart/form-data" id="signUp" method="post" class="form-signin">
             <br>
             <div style="width: 50%; float: left; padding-right: 2%">
                 <input type="text" class="inputEmail" name="firstName" placeholder="First Name" required autofocus>
                 <input type="text" class="inputEmail" name="lastName" placeholder="Last Name" required>
                 <input type="text" class="inputEmail" name="username" placeholder="Username" required>
+                <label for="picture" style="color: white">Picture:</label>
+                <input style="margin-bottom: 10px" type="file" id="picture" name="picture" required>
             </div>
 
             <div style="width: 50%; float: left">

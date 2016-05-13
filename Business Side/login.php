@@ -13,7 +13,7 @@
 </head>
 <body>
 <?php
-    require_once("../Client Side/connect.php");
+    require_once("../connect.php");
 
     if(@$_POST['formSubmit'] == "Submit")
     {
@@ -49,7 +49,7 @@
 
     <div class="card card-container" style="background-color: black">
 
-        <img id="profile-img" class="profile-img-card" src="profile.png"/>
+        <img id="profile-img" class="profile-img-card" src="../images/profile.png"/>
 
         <span style="color: orangered"></span>
 
@@ -60,8 +60,9 @@
             <input type="text" class="form-control, inputEmail" name="username" placeholder="Username" required autofocus style="background-color: lightblue; color: white;">
 
             <input type="password" class="form-control, inputPassword" name="password" placeholder="Password" required style="background-color: lightblue; color: white;">
+            <a href="signup.php">Don't have an account? Sign up</a>
 
-            <input name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" >
+            <input style="margin-top: 10px;" name="formSubmit" value="Submit" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" >
         </form>
     </div>
 </div>
