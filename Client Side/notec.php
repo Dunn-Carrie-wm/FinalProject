@@ -67,8 +67,8 @@ if(@$_POST['formSubmit'] == "Submit")
         <div class="icon"></div>
     </div>
     <ul>
-        <li><a href="patientList.php">Patient List</a></li>
-        <li><a href="home.php">Home Page</a></li>
+
+        <li><a href="profile2.php.php">Home Page</a></li>
         <li><a href="logout.php">Log Out</a></li>
     </ul>
 </nav>
