@@ -14,37 +14,31 @@
 <div style="background-color: white; height: 700px; width: 370px; position: absolute; margin-left: 10px; margin-top: 10px;">
     <h1 style="text-decoration: underline; font-size: 50px; margin-left: 125px; text-align: center; font-family: Times New Roman">Reminders</h1>
     <?php
-        require_once("../connect.php");
+    require_once("../connect.php");
 
-        // Retrieve the user data from MySQL
-        $query = "SELECT subject, message, date, confirm FROM remindersc WHERE user_id = :id ORDER BY date";
-        $stmt = $dbh->prepare($query);
-        $stmt->execute(array('id'=>$_SESSION['user_id']));
-        $results = $stmt->fetchAll();
+    // Retrieve the user data from MySQL
+    $query = "SELECT subject, message, date, confirm FROM remindersc WHERE user_id = :id ORDER BY date";
+    $stmt = $dbh->prepare($query);
+    $stmt->execute(array('id'=>$_SESSION['user_id']));
+    $results = $stmt->fetchAll();
 
-        $query2 = "SELECT email FROM client WHERE id = :id";
-        $stmt2 = $dbh->prepare($query2);
-        $stmt2->execute(array('id'=>$_SESSION['user_id']));
-        $results2 = $stmt2->fetch();
-        $email = $results2['email'];
+    echo '<table>';
+    $text = array();
+    $date = array();
+    $count = 0;
 
-        echo '<table>';
-        $text = array();
-        $date = array();
-        $count = 0;
+    foreach($results as $row)
+    {
+        if($row['confirm'] == "false")
+            echo '<tr id = "' . $count .'" class="title" style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%; background-color: #75fd60"><td>'. $row['subject'].'</td>';
+        else
+            echo '<tr id = "' . $count .'" class="title" style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['subject'].'</td>';
 
-        foreach($results as $row)
-        {
-            if($row['confirm'] == "false")
-                echo '<tr id = "' . $count .'" class="title" style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%; background-color: #75fd60"><td>'. $row['subject'].'</td>';
-            else
-                echo '<tr id = "' . $count .'" class="title" style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['subject'].'</td>';
-
-            array_push($text, $row['message']);
-            array_push($date, $row['date']);
-            $count++;
-        }
-        echo '</table>'
+        array_push($text, $row['message']);
+        array_push($date, $row['date']);
+        $count++;
+    }
+    echo '</table>'
     ?>
 </div>
 <?php
@@ -67,7 +61,7 @@ if(@$_POST['formSubmit'] == "Submit")
     $query = "INSERT INTO remindersc (email, subject, message, date, user_id) VALUES (:email, :subject, :message, :date, :id)";
     $stmt = $dbh->prepare($query);
     $stmt->execute(array(
-        "email"=>$email,
+        "email"=>$_POST['email'],
         "subject"=>$_POST['subject'],
         "message"=>$_POST['message'],
         "date"=>$_POST['date'],
@@ -79,7 +73,7 @@ if(@$_POST['formSubmit'] == "Submit")
         echo("<p>There was an error with your form:</p>\n");
         echo("<ul>" . $errorMessage . "</ul>\n");
     }
-    header("Location: reminders.php");
+    header("Location: reminder.php");
 }
 ?>
 <nav>
@@ -123,8 +117,8 @@ if(@$_POST['formSubmit'] == "Submit")
 
                 foreach($date as $return)
                 {
-                    $newDate = date("m-d-Y", strtotime($return));
-                    $return = $newDate;
+                $newDate = date("m-d-Y", strtotime($return));
+                $return = $newDate;
                 ?>
                 date.push("<?= $return;?>");
                 <?php } ?>
@@ -158,6 +152,11 @@ if(@$_POST['formSubmit'] == "Submit")
         </p>
         <br>
         <p>
+            <label for="email">To: </label>
+            <input id="email" class="w3-input" type="email" name="email" required>
+        </p>
+        <br>
+        <p>
             <label for="subject">Subject</label>
             <input id="subject" class="w3-input" type="text" name="subject" required>
         </p>
@@ -180,7 +179,6 @@ if(@$_POST['formSubmit'] == "Submit")
     <div style="height: 400px; width: 900px; font-size: 30px; border: dashed; border-color: black;">
         <div style="text-align: left; margin-left: 10px" id="date"></div>
         <div style="text-align: center;" id="text"></div>
-
     </div>
 </div>
 </body>
