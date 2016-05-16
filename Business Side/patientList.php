@@ -1,5 +1,5 @@
 <?php
-require_once("../Client Side/connect.php");
+require_once("../connect.php");
 
 $query = "SELECT * FROM client";
 $stmt = $dbh->prepare($query);
@@ -42,7 +42,7 @@ $users = $stmt->fetchAll();
         <ul>
             <li><a href="home.php">Home Page</a></li>
             <li><a href="note.php">Note Pad</a></li>
-            <li><a href="reminderinput.php">Reminder</a></li>
+            <li><a href="reminders.php">Reminder</a></li>
             <li><a href="general.php">General Facts</a></li>
             <li><a href="logout.php">Log Out</a></li>
         </ul>

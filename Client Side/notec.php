@@ -14,7 +14,7 @@
 <div style="background-color: white; height: 700px; width: 370px; position: absolute; margin-left: 10px; margin-top: 10px;">
 <h1 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman">Notes</h1>
     <?php
-    require_once("connect.php");
+    require_once("../connect.php");
 
     // Retrieve the user data from MySQL
     $query = "SELECT title, text FROM notec WHERE user_id = :id";
@@ -67,8 +67,8 @@ if(@$_POST['formSubmit'] == "Submit")
         <div class="icon"></div>
     </div>
     <ul>
-
-        <li><a href="profile2.php.php">Home Page</a></li>
+        <li><a href="patientList.php">Patient List</a></li>
+        <li><a href="home.php">Home Page</a></li>
         <li><a href="logout.php">Log Out</a></li>
     </ul>
 </nav>

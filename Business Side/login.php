@@ -13,7 +13,7 @@
 </head>
 <body>
 <?php
-    require_once("../Client Side/connect.php");
+    require_once("../connect.php");
 
     if(@$_POST['formSubmit'] == "Submit")
     {

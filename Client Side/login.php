@@ -26,7 +26,7 @@
 
 <body>
 <?php
-    require_once("connect.php");
+    require_once("../connect.php");
 
     if(@$_POST['formSubmit'] == "Submit")
     {

@@ -15,7 +15,7 @@
 <div style="background-color: white; height: 700px; width: 370px; position: absolute; margin-left: 10px; margin-top: 10px;">
 <h1 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman">Notes</h1>
     <?php
-    require_once("../Client Side/connect.php");
+    require_once("../connect.php");
 
     // Retrieve the user data from MySQL
     $query = "SELECT title, text FROM note";
