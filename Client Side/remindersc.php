@@ -17,18 +17,32 @@
         require_once("../connect.php");
 
         // Retrieve the user data from MySQL
-        $query = "SELECT subject, message, date FROM reminders WHERE user_id = :id ORDER BY date";
+        $query = "SELECT email FROM client WHERE id = :id";
+        $stmt = $dbh->prepare($query);
+        $stmt->execute(array('id'=>$_SESSION['user_id']));
+        $results = $stmt->fetch();
+        $email = $results['email'];
+
+        // Retrieve the user data from MySQL
+        $query = "SELECT * FROM remindersc WHERE user_id = :id ORDER BY date";
         $stmt = $dbh->prepare($query);
         $stmt->execute(array('id'=>$_SESSION['user_id']));
         $results = $stmt->fetchAll();
 
         echo '<table>';
         $text = array();
+        $date = array();
         $count = 0;
         foreach($results as $row)
         {
-            echo '<tr id = "' . $count .'" class="title" style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['subject'].'</td>';
+            if($row['confirm'] == "true")
+                echo '<tr id = "' . $count .'" class="title" style="border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['subject'].'</td>';
+            else
+                echo '<tr id = "' . $count .'" class="title" style="background-color: lightgreen; border: dashed; border-color: #00b7bb; text-align: center; height: 60px; width: 100%;"><td>'. $row['subject'].'</td>';
+
             array_push($text, $row['message']);
+            $newDate = date("m-d-Y", strtotime($row['date']));
+            array_push($date, $newDate);
             $count++;
         }
         echo '</table>'
@@ -51,15 +65,15 @@ if(@$_POST['formSubmit'] == "Submit")
         $errorMessage = "<li>You forgot to enter your note.</li>";
     }
 
-    $stmt = $dbh->prepare("INSERT INTO note (title, date, text ) VALUES (?, ?, ?)");
-    $result = $stmt->execute(array($_POST['title'], $_POST['date'], $_POST['text']));
+    $stmt = $dbh->prepare("INSERT INTO remindersc (email, subject, message, date, user_id) VALUES (:email, :subject, :message, :date, :id)");
+    $result = $stmt->execute(array('email'=>$email, 'subject'=>$_POST['subject'], 'message'=>$_POST['message'], 'date'=>$_POST['date'], 'id'=>$_SESSION['user_id']));
 
     if(!empty($errorMessage))
     {
         echo("<p>There was an error with your form:</p>\n");
         echo("<ul>" . $errorMessage . "</ul>\n");
     }
-    header("Location: reminders.php");
+    header("Location: remindersc.php");
 }
 ?>
 <nav>
@@ -67,8 +81,7 @@ if(@$_POST['formSubmit'] == "Submit")
         <div class="icon"></div>
     </div>
     <ul>
-        <li><a href="patientList.php">Patient List</a></li>
-        <li><a href="home.php">Home Page</a></li>
+        <li><a href="profile2.php">Profile Page</a></li>
         <li><a href="logout.php">Log Out</a></li>
     </ul>
 </nav>
@@ -91,6 +104,7 @@ if(@$_POST['formSubmit'] == "Submit")
                 $('#result').show();
                 toggle++;
                 var text = [];
+                var date =[];
 
                 <?php
                 foreach($text as $return)
@@ -98,11 +112,19 @@ if(@$_POST['formSubmit'] == "Submit")
                 ?>
 
                 text.push("<?= $return;?>");
+                <?php }
+
+                foreach($date as $return)
+                {
+                ?>
+
+                date.push("<?= $return;?>");
                 <?php } ?>
 
                 $('#header').html($(this).text());
                 var index = $(this).attr('id');
-                $('#text').html(text[index]);
+                $('#date').html(date[index]);
+                $('#text').html("Reminder: " + text[index]);
             }
             else
             {
@@ -117,23 +139,23 @@ if(@$_POST['formSubmit'] == "Submit")
 <div id="entry" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; ">
     <br>
     <div style="background-color: pink;">
-        <h2 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">New Entry</h2>
+        <h2 style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">New Reminder</h2>
     </div>
 
     <form class="w3-container" method="post">
         <p>
-            <label for="title">Title</label>
-            <input id="title" class="w3-input" type="text" name="title">
+            <label for="date1">Date</label>
+            <input id="date1" class="w3-input" type="date" name="date">
         </p>
         <br>
         <p>
-            <label for="date">Date</label>
-            <input id="date" class="w3-input" type="date" name="date">
+            <label for="Subject">Subject</label>
+            <input id="Subject" class="w3-input" type="text" name="subject">
         </p>
         <br>
         <p>
-            <label for="text1">Text</label>
-            <input id="text1" class="w3-input" type="text" style="height: 100px;" name="text">
+            <label for="text1">Message</label>
+            <input id="text1" class="w3-input" type="text" style="height: 100px;" name="message">
         </p>
         <br>
 
@@ -143,13 +165,14 @@ if(@$_POST['formSubmit'] == "Submit")
 
 <div id="result" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; display: none; ">
     <br>
+
     <div style="background-color: pink;">
-        <h2 id="header" style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">Test</h2>
+        <h2 id="header" style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black"></h2>
     </div>
 
-    <div id="text" style=" height: 400px; width: 900px; text-align: center; font-size: 30px; border: dashed; border-color: black">
-
-
+    <div style="height: 400px; width: 900px; font-size: 30px; border: dashed; border-color: black">
+        <div id="date" style="margin-left: 25px"></div>
+        <div id="text" style="margin-left: 25px"></div>
     </div>
 </div>
 </body>

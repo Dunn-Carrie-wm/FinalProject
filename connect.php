@@ -51,32 +51,38 @@
         $mail->Send();
     }
 
-    $today = date("Y-m-d");
-    $query = "SELECT * FROM reminders";
-    $stmt = $dbh->prepare($query);
-    $stmt->execute();
-    $results = $stmt->fetchAll();
 
-    foreach($results as $row)
+    for($i = 1; $i <= 2; $i++)
     {
-        $date = $row['date'];
+        if($i == 1)
+            $table = "s";
+        else if ($i == 2)
+            $table = "sc";
 
-        if ($date <= $today)
+        $today = date("Y-m-d");
+        $query = "SELECT * FROM reminder" . $table;
+        $stmt = $dbh->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+
+        foreach($results as $row)
         {
-            if($row['confirm'] == 'true')
+            $date = $row['date'];
+
+            if ($date <= $today)
             {
-                $email = $row['email'];
-                $message = $row['message'];
-                $subject = $row['subject'];
+                if($row['confirm'] == 'true')
+                {
+                    $email = $row['email'];
+                    $message = $row['message'];
+                    $subject = $row['subject'];
 
-                send_mail($email, $message, $subject);
-                echo "The email has been sent. <br><br>";
+                    send_mail($email, $message, $subject);
 
-                $query = "UPDATE reminders SET confirm = 'false' WHERE id = :id";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute(array("id"=>$row['id']));
+                    $query = "UPDATE reminder" . $table . " SET confirm = 'false' WHERE id = :id";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute(array("id"=>$row['id']));
+                }
             }
-            else
-                echo "It has already been sent";
         }
     }
