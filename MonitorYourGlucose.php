@@ -4,7 +4,7 @@ $dbc = new PDO('mysql:host=localhost;dbname=injection', 'root','root');
 <!DOCTYPE html>
 <html>
 <head xmlns="http://www.w3.org/1999/html">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Css/style.css">
 
     <script>
         function checkingGlucose (){

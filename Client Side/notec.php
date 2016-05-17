@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Note Pad</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../Css/style.css">
     <link rel="stylesheet" href="../Css/note.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
@@ -67,8 +68,9 @@ if(@$_POST['formSubmit'] == "Submit")
         <div class="icon"></div>
     </div>
     <ul>
-        <li><a href="patientList.php">Patient List</a></li>
-        <li><a href="home.php">Home Page</a></li>
+        <li><a href="profile2.php">Home Page</a></li>
+        <li><a href="remindersc.php">Reminder</a></li>
+        <li><a href="general.php">General Facts</a></li>
         <li><a href="logout.php">Log Out</a></li>
     </ul>
 </nav>
@@ -123,17 +125,17 @@ if(@$_POST['formSubmit'] == "Submit")
     <form class="w3-container" method="post">
         <p>
             <label for="title">Title</label>
-            <input id="title" class="w3-input" type="text" name="title">
+            <input id="title" class="w3-input" type="text" name="title" required>
         </p>
             <br>
         <p>
             <label for="date">Date</label>
-            <input id="date" class="w3-input" type="date" name="date">
+            <input id="date" class="w3-input" type="date" name="date" required>
         </p>
             <br>
         <p>
             <label for="text1">Text</label>
-            <input id="text1" class="w3-input" type="text" style="height: 100px;" name="text">
+            <input id="text1" class="w3-input" type="text" style="height: 100px;" name="text" required>
         </p>
         <br>
 

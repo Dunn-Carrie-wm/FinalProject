@@ -3,7 +3,7 @@
 <head>
     <title> Sign up </title>
 
-    <link href="../Business%20Side/signup.css" rel="stylesheet" type="text/css">
+    <link href="../Css/signup.css" rel="stylesheet" type="text/css">
     <link href="https://assets.onestore.ms/cdnfiles/onestorerolling-1601-22000/shell/v3/scss/shell.min.css"
           rel="stylesheet" type="text/css" media="screen"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,11 +26,6 @@
 <body>
 <?php
     require_once("../connect.php");
-
-    define('MM_UPLOADPATH', '../images/');
-    define('MM_MAXFILESIZE', 32768);      // 32 KB
-    define('MM_MAXIMGWIDTH', 120);        // 120 pixels
-    define('MM_MAXIMGHEIGHT', 120);       // 120 pixels
 
     define('MM_UPLOADPATH', '../images/');
     define('MM_MAXFILESIZE', 32768);      // 32 KB

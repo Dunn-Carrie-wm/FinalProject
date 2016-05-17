@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="../Css/style.css">
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="cal.css">
+    <link rel="stylesheet" href="../Css/cal.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <style>
         .close
@@ -113,11 +113,11 @@ if(isset($_GET['id'])) {
             <li><a href="../Business%20Side/home.php">Home Page</a></li>
             <li><a href="../Business%20Side/patientList.php">Patient List</a></li>
             <li><a href="../Business%20Side/note.php">Note Pad</a></li>
-            <li><a href="../Business%20Side/reminderinput.php">Reminder</a></li>
+            <li><a href="../Business%20Side/reminders.php">Reminder</a></li>
             <li><a href="../Business%20Side/general.php">General Facts</a></li>
             <li><a href="../Business%20Side/logout.php">Log Out</a></li>
         </ul>
-    </nav>;
+    </nav>
 <?php
 }
 

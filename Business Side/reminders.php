@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Note Pad</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../Css/note.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
@@ -77,18 +78,15 @@ if(@$_POST['formSubmit'] == "Submit")
         <div class="icon"></div>
     </div>
     <ul>
-        <li><a href="profile2.php">Profile Page</a></li>
+        <li><a href="home.php">Home Page</a></li>
+        <li><a href="patientList.php">Patient List</a></li>
+        <li><a href="note.php">Note Pad</a></li>
+        <li><a href="general.php">General Facts</a></li>
         <li><a href="logout.php">Log Out</a></li>
     </ul>
 </nav>
-
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script>
-    $(".navToggle").click (function(){
-        $(this).toggleClass("open");
-        $("nav").toggleClass("open");
-    });
-</script>
+<script src="index.js"></script>
 
 <script>
     $(document).ready(function(){
@@ -149,22 +147,22 @@ if(@$_POST['formSubmit'] == "Submit")
     <form class="w3-container" method="post">
         <p>
             <label for="date1">Date</label>
-            <input id="date1" class="w3-input" type="date" name="date">
+            <input id="date1" class="w3-input" type="date" name="date" required>
         </p>
         <br>
         <p>
             <label for="to">To</label>
-            <input id="to" class="w3-input" type="email" name="to">
+            <input id="to" class="w3-input" type="email" name="to" required>
         </p>
         <br>
         <p>
             <label for="Subject">Subject</label>
-            <input id="Subject" class="w3-input" type="text" name="subject">
+            <input id="Subject" class="w3-input" type="text" name="subject" required>
         </p>
         <br>
         <p>
             <label for="text1">Message</label>
-            <input id="text1" class="w3-input" type="text" style="height: 100px;" name="message">
+            <input id="text1" class="w3-input" type="text" style="height: 100px;" name="message" required>
         </p>
         <br>
 

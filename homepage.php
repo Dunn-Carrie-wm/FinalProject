@@ -15,7 +15,6 @@ $dbc = new PDO('mysql:host=localhost;dbname=injection', 'root','root');
     <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="Css/style.css" type="text/css">
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="css/NavBar.js"> </script>
     <!--Carousel CSS-->
     <style>
         .carousel-inner > .item > img,

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Note Pad</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../Css/note.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
@@ -18,9 +19,9 @@
     require_once("../connect.php");
 
     // Retrieve the user data from MySQL
-    $query = "SELECT title, text FROM note";
+    $query = "SELECT title, text FROM note WHERE user_id = :id";
     $stmt = $dbh->prepare($query);
-    $stmt->execute();
+    $stmt->execute(array('id'=>$_SESSION['user_id']));
     $results = $stmt->fetchAll();
 
     echo '<table>';
@@ -52,8 +53,8 @@ if(@$_POST['formSubmit'] == "Submit")
         $errorMessage = "<li>You forgot to enter your note.</li>";
     }
 
-    $stmt = $dbh->prepare("INSERT INTO note (title, date, text ) VALUES (?, ?, ?)");
-    $result = $stmt->execute(array($_POST['title'], $_POST['date'], $_POST['text']));
+    $stmt = $dbh->prepare("INSERT INTO note (title, date, text, user_id) VALUES (?, ?, ?, ?)");
+    $result = $stmt->execute(array($_POST['title'], $_POST['date'], $_POST['text'], $_SESSION['user_id']));
 
     if(!empty($errorMessage))
     {
@@ -68,19 +69,15 @@ if(@$_POST['formSubmit'] == "Submit")
         <div class="icon"></div>
     </div>
     <ul>
-        <li><a href="patientList.php">Patient List</a></li>
         <li><a href="home.php">Home Page</a></li>
+        <li><a href="patientList.php">Patient List</a></li>
+        <li><a href="reminders.php">Reminder</a></li>
+        <li><a href="general.php">General Facts</a></li>
         <li><a href="logout.php">Log Out</a></li>
     </ul>
 </nav>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script>
-    $(".navToggle").click (function(){
-        $(this).toggleClass("open");
-        $("nav").toggleClass("open");
-    });
-
-</script>
+<script src="index.js"></script>
 
 <script>
     $(document).ready(function(){
@@ -124,17 +121,17 @@ if(@$_POST['formSubmit'] == "Submit")
     <form class="w3-container" method="post">
         <p>
             <label for="title">Title</label>
-            <input id="title" class="w3-input" type="text" name="title">
+            <input id="title" class="w3-input" type="text" name="title" required>
         </p>
             <br>
         <p>
             <label for="date">Date</label>
-            <input id="date" class="w3-input" type="date" name="date">
+            <input id="date" class="w3-input" type="date" name="date" required>
         </p>
             <br>
         <p>
             <label for="text1">Text</label>
-            <input id="text1" class="w3-input" type="text" style="height: 100px;" name="text">
+            <input id="text1" class="w3-input" type="text" style="height: 100px;" name="text" required>
         </p>
         <br>
 
@@ -145,7 +142,7 @@ if(@$_POST['formSubmit'] == "Submit")
 <div id="result" style=" height: 700px; width: 900px; margin-left: 400px; position: absolute; display: none; ">
     <br>
     <div style="background-color: pink;">
-        <h2 id="header" style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black">Test</h2>
+        <h2 id="header" style="text-decoration: underline; font-size: 50px; text-align: center; font-family: Times New Roman; color: black"></h2>
     </div>
 
     <div id="text" style=" height: 400px; width: 900px; text-align: center; font-size: 30px; border: dashed; border-color: black">

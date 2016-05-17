@@ -1,29 +1,18 @@
 <?php
  //Start the session
-require_once('startsession.php');
-
-// Insert the page header
-$page_title = 'Home page';
+require_once('../connect.php');
 
 if (!isset($_SESSION['user_id'])) {
   echo '<p class="login">Please <a href="login.php">log in</a> to access this page.</p>';
   exit();
 }
 
-$dbh = new PDO('mysql:host=127.0.0.1;dbname=injection', 'root', 'root');
-
-
 // Grab the profile data from the database
-if (!isset($_GET['user_id'])) {
-  $query = "SELECT firstName, lastName FROM users WHERE id = '" . $_SESSION['user_id'] . "'";
-}
-else {
-  $query = "SELECT firstName, lastName FROM users WHERE id = '" . $_GET['user_id'] . "'";
-}
+$query = "SELECT firstName, lastName FROM users WHERE id = '" . $_SESSION['user_id'] . "'";
 $stmt = $dbh->prepare($query);
 $stmt->execute();
 
-$count =$stmt->rowCount();
+$count = $stmt->rowCount();
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +21,7 @@ $count =$stmt->rowCount();
     <meta charset="UTF-8">
     <title>Home Page</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
@@ -44,13 +33,13 @@ $count =$stmt->rowCount();
     <ul>
       <li><a href="patientList.php">Patient List</a></li>
       <li><a href="note.php">Note Pad</a></li>
-      <li><a href="reminderinput.php">Reminder</a></li>
+      <li><a href="reminders.php">Reminder</a></li>
       <li><a href="general.php">General Facts</a></li>
       <li><a href="logout.php">Log Out</a></li>
-   </ul>
+    </ul>
   </nav>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-        <script src="index.js"></script>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="index.js"></script>
 
   <div id="test" style="width: 1000px; height: 100px;margin-left: 13%; margin-top: 10px; ">
     <p style="font-size: 60px; margin-top: 20px">DR.</p>

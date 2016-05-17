@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Home Page</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../Css/style.css">
 </head>
 
 <body>
@@ -14,15 +14,14 @@
         <div class="icon"></div>
     </div>
     <ul>
-        <li><a href="home.php">Home Page</a></li>
-        <li><a href="patientList.php">Patient List</a></li>
-        <li><a href="note.php">Note Pad</a></li>
-        <li><a href="reminders.php">Reminder</a></li>
+        <li><a href="profile2.php">Home Page</a></li>
+        <li><a href="notec.php">Note Pad</a></li>
+        <li><a href="remindersc.php">Reminder</a></li>
         <li><a href="logout.php">Log Out</a></li>
     </ul>
 </nav>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="index.js"></script>
+<script src="../Business%20Side/index.js"></script>
 
 </body>
 

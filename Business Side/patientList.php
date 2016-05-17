@@ -34,26 +34,20 @@ $users = $stmt->fetchAll();
 </head>
 
 <body>
-    <nav>
-        <div class="navToggle">
-            <div class="icon"></div>
-        </div>
-
-        <ul>
-            <li><a href="home.php">Home Page</a></li>
-            <li><a href="note.php">Note Pad</a></li>
-            <li><a href="reminders.php">Reminder</a></li>
-            <li><a href="general.php">General Facts</a></li>
-            <li><a href="logout.php">Log Out</a></li>
-        </ul>
-    </nav>
-
-    <script>
-        $(".navToggle").click (function(){
-            $(this).toggleClass("open");
-            $("nav").toggleClass("open");
-        });
-    </script>
+<nav>
+    <div class="navToggle">
+        <div class="icon"></div>
+    </div>
+    <ul>
+        <li><a href="home.php">Home Page</a></li>
+        <li><a href="note.php">Note Pad</a></li>
+        <li><a href="reminders.php">Reminder</a></li>
+        <li><a href="general.php">General Facts</a></li>
+        <li><a href="logout.php">Log Out</a></li>
+    </ul>
+</nav>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="index.js"></script>
 
 <div style="text-align: center">
 
