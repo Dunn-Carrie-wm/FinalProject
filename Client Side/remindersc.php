@@ -1,3 +1,12 @@
+<?php
+//Start the session
+require_once('../connect.php');
+
+if (!isset($_SESSION['client_id'])) {
+    echo '<p class="login">Please <a href="login.php">log in</a> to access this page.</p>';
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,19 +24,17 @@
 <div style="background-color: white; height: 700px; width: 370px; position: absolute; margin-left: 10px; margin-top: 10px;">
     <h1 style="text-decoration: underline; font-size: 50px; margin-left: 125px; text-align: center; font-family: Times New Roman">Reminders</h1>
     <?php
-        require_once("../connect.php");
-
         // Retrieve the user data from MySQL
         $query = "SELECT email FROM client WHERE id = :id";
         $stmt = $dbh->prepare($query);
-        $stmt->execute(array('id'=>$_SESSION['user_id']));
+        $stmt->execute(array('id'=>$_SESSION['client_id']));
         $results = $stmt->fetch();
         $email = $results['email'];
 
         // Retrieve the user data from MySQL
         $query = "SELECT * FROM remindersc WHERE user_id = :id ORDER BY date";
         $stmt = $dbh->prepare($query);
-        $stmt->execute(array('id'=>$_SESSION['user_id']));
+        $stmt->execute(array('id'=>$_SESSION['client_id']));
         $results = $stmt->fetchAll();
 
         echo '<table>';
@@ -67,7 +74,7 @@ if(@$_POST['formSubmit'] == "Submit")
     }
 
     $stmt = $dbh->prepare("INSERT INTO remindersc (email, subject, message, date, user_id) VALUES (:email, :subject, :message, :date, :id)");
-    $result = $stmt->execute(array('email'=>$email, 'subject'=>$_POST['subject'], 'message'=>$_POST['message'], 'date'=>$_POST['date'], 'id'=>$_SESSION['user_id']));
+    $result = $stmt->execute(array('email'=>$email, 'subject'=>$_POST['subject'], 'message'=>$_POST['message'], 'date'=>$_POST['date'], 'id'=>$_SESSION['client_id']));
 
     if(!empty($errorMessage))
     {

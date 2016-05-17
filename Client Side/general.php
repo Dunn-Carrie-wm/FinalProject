@@ -1,3 +1,12 @@
+<?php
+//Start the session
+require_once('../connect.php');
+
+if (!isset($_SESSION['client_id'])) {
+    echo '<p class="login">Please <a href="login.php">log in</a> to access this page.</p>';
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>

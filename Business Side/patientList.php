@@ -1,5 +1,11 @@
 <?php
-require_once("../connect.php");
+//Start the session
+require_once('../connect.php');
+
+if (!isset($_SESSION['user_id'])) {
+    echo '<p class="login">Please <a href="login.php">log in</a> to access this page.</p>';
+    exit();
+}
 
 $query = "SELECT * FROM client";
 $stmt = $dbh->prepare($query);

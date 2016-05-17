@@ -53,7 +53,7 @@
 
         if($userinfo){
             print_r($stmt->errorInfo());
-            $_SESSION['user_id'] = $userinfo['id'];
+            $_SESSION['client_id'] = $userinfo['id'];
 
             header("Location: profile2.php");
         }

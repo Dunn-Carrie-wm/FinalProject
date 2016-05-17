@@ -10,9 +10,9 @@ $dbc = new PDO('mysql:host=localhost;dbname=injection', 'root','root');
         function checkingGlucose (){
             x = document.getElementById("glucose");
 
-            if (x.value <100){
+            if (x.value < 100){
                 alert('Your Glucose Level is Low, please see our listed recommendations to maintain at a normal healthy level.');
-            } else if(100<x.value>140){
+            } else if(100 < x.value < 140){
                 alert('Your Glucose Level is normal/healthy.');
             }else{
                 alert('Your Glucose Level is High, please see our listed recommendations to maintain at a normal healthy level.');

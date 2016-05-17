@@ -1,3 +1,12 @@
+<?php
+//Start the session
+require_once('../connect.php');
+
+if (!isset($_SESSION['user_id'])) {
+    echo '<p class="login">Please <a href="login.php">log in</a> to access this page.</p>';
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +24,6 @@
 <div style="background-color: white; height: 700px; width: 370px; position: absolute; margin-left: 10px; margin-top: 10px;">
     <h1 style="text-decoration: underline; font-size: 50px; margin-left: 125px; text-align: center; font-family: Times New Roman">Reminders</h1>
     <?php
-        require_once("../connect.php");
-
         // Retrieve the user data from MySQL
         $query = "SELECT * FROM reminders WHERE user_id = :id ORDER BY date";
         $stmt = $dbh->prepare($query);

@@ -36,8 +36,8 @@ $dbc = new PDO('mysql:host=localhost;dbname=injection', 'root','root');
         </div>
         <ul>
             <li><a href="homepage.php">Home</a></li>
-            <li><a href="Business%20Side/home.php">Doctor</a></li>
-            <li><a href="Client%20Side/profile2.php">Patient</a></li>
+            <li><a href="Business%20Side/login.php">Doctor</a></li>
+            <li><a href="Client%20Side/login.php">Patient</a></li>
             <li><a href="FAQ.php">FAQs</a></li>
         </ul>
     </nav>

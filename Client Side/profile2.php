@@ -1,5 +1,12 @@
 <?php
-    require_once("../connect.php");
+    //Start the session
+    require_once('../connect.php');
+
+    if (!isset($_SESSION['client_id'])) {
+        echo '<p class="login">Please <a href="login.php">log in</a> to access this page.</p>';
+        exit();
+    }
+
     $date = date('Y-m-d');
 
     // Grab the profile data from the database
@@ -11,10 +18,10 @@
 
     else
     {
-        if(isset($_SESSION['user_id']))
+        if(isset($_SESSION['client_id']))
         {
-            $query = "SELECT * FROM client WHERE id = " . $_SESSION['user_id'] ."";
-            $id = $_SESSION['user_id'];
+            $query = "SELECT * FROM client WHERE id = " . $_SESSION['client_id'] ."";
+            $id = $_SESSION['client_id'];
         }
         else
             header("Location: login.php");
