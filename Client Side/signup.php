@@ -59,8 +59,8 @@
                     }
                     else
                     {
-                        $stmt = $dbh->prepare("INSERT INTO client (firstName, lastName, username, email, password, type, picture) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                        $result = $stmt->execute(array($_POST['firstName'], $_POST['lastName'], $_POST['username'], $_POST['email'], $_POST['password'], $_POST['type'], $picture));
+                        $stmt = $dbh->prepare("INSERT INTO client (firstName, lastName, username, email, password, type, picture, doctor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                        $result = $stmt->execute(array($_POST['firstName'], $_POST['lastName'], $_POST['username'], $_POST['email'], $_POST['password'], $_POST['type'], $picture, $_POST['doctor']));
                         if(!$result){
                             print_r($stmt->errorInfo());
                         }
@@ -126,6 +126,23 @@
                     <option value="Type 2">Type 2</option>
                     <option value="Prediabetes">Prediabetes</option>
                     <option value="Gestational">Gestational</option>
+                </select>
+
+                <select name="doctor" form="signUp" required>
+                    <option value="" selected="selected">Select Your Doctor</option>
+                    <?php
+                        require_once("../connect.php");
+                        $query = "SELECT id, firstName, lastName FROM users";
+                        $stmt = $dbh->prepare($query);
+                        $stmt->execute();
+                        $results = $stmt->fetchAll();
+
+                        foreach($results as $result)
+                        {
+                            $name = $result['firstName'] . " " . $result['lastName'];
+                            echo "<option value='" . $result['id'] ."'>" . $name . "</option>";
+                        }
+                    ?>
                 </select>
             </div>
 

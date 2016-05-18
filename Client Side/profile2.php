@@ -2,7 +2,7 @@
     //Start the session
     require_once('../connect.php');
 
-    if (!isset($_SESSION['client_id'])) {
+    if (!isset($_SESSION['client_id']) && !isset($_SESSION['user_id'])) {
         echo '<p class="login">Please <a href="login.php">log in</a> to access this page.</p>';
         exit();
     }

@@ -24,11 +24,15 @@
     // If the session vars aren't set, try to set them with a cookie
     if (!isset($_SESSION['user_id']))
     {
-        if (isset($_COOKIE['user_id']) && isset($_COOKIE['username']))
-        {
+        if (isset($_COOKIE['user_id']))
           $_SESSION['user_id'] = $_COOKIE['user_id'];
-          $_SESSION['username'] = $_COOKIE['username'];
-        }
+    }
+
+    // If the session vars aren't set, try to set them with a cookie
+    if (!isset($_SESSION['client_id']))
+    {
+        if (isset($_COOKIE['client_id']))
+            $_SESSION['client_id'] = $_COOKIE['client_id'];
     }
 
     function send_mail($email,$message,$subject)
@@ -50,7 +54,6 @@
         $mail->MsgHTML($message);
         $mail->Send();
     }
-
 
     for($i = 1; $i <= 2; $i++)
     {

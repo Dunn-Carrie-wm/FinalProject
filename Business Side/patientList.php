@@ -7,9 +7,9 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$query = "SELECT * FROM client";
+$query = "SELECT * FROM client WHERE doctor_id = :id";
 $stmt = $dbh->prepare($query);
-$stmt->execute();
+$stmt->execute(array('id'=>$_SESSION['user_id']));
 $users = $stmt->fetchAll();
 ?>
 
