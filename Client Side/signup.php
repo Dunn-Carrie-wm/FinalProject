@@ -120,7 +120,7 @@
                 <input type="email" class="inputEmail" name="email" placeholder="Email" required>
                 <input type="password" class="inputEmail" name="password" placeholder="Password" required>
 
-                <select name="type" form="signUp" required>
+                <select name="type" form="signUp" style="width: 136px" required>
                     <option value="" selected="selected">Type of Diabetes</option>
                     <option value="Type 1">Type 1</option>
                     <option value="Type 2">Type 2</option>
@@ -128,8 +128,9 @@
                     <option value="Gestational">Gestational</option>
                 </select>
 
-                <select name="doctor" form="signUp">
+                <select name="doctor" form="signUp" style="margin-top: 3px; width: 136px" required>
                     <option value="" selected="selected">Select Your Doctor</option>
+                    <option value="">N/A</option>
                     <?php
                         require_once("../connect.php");
                         $query = "SELECT id, firstName, lastName FROM users";

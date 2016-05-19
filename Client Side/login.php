@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Login </title>
+    <title>Login | User</title>
     <link href="https://assets.onestore.ms/cdnfiles/onestorerolling-1601-22000/shell/v3/scss/shell.min.css"
           rel="stylesheet" type="text/css" media="screen"/>
     <link href="../Css/login.css" rel="stylesheet" type="text/css">
@@ -65,14 +65,6 @@
         }
     }
 ?>
-
-    <script>
-        $(".navToggle").click (function(){
-            $(this).toggleClass("open");
-            $("nav").toggleClass("open");
-        });
-    </script>
-
     <nav>
         <div class="navToggle">
             <div class="icon"></div>
@@ -84,7 +76,6 @@
             <li><a href="../FAQ.php">FAQs</a></li>
         </ul>
     </nav>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="../Business%20Side/index.js"></script>
 
     <h1 style="text-align: center; color: #00b7bb; margin-top: 4%">Login</h1>

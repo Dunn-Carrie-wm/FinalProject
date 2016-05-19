@@ -23,8 +23,6 @@
             $query = "SELECT * FROM client WHERE id = " . $_SESSION['client_id'] ."";
             $id = $_SESSION['client_id'];
         }
-        else
-            header("Location: login.php");
     }
 
     $stmt = $dbh->prepare($query);
@@ -183,12 +181,11 @@ else{ ?>
             function checkingGlucose()
             {
                 var x = document.forms["addInput"]["glucose"].value;
-
                 if(x != null && x != "")
                 {
-                    if (x.value < 100)
+                    if (x < 100)
                         alert('Your glucose level is low, please see our listed recommendations to maintain a normal healthy level.');
-                    else if(100 < x.value < 140)
+                    else if((100 <= x) && (x <= 140))
                         alert('Your glucose level is normal/healthy.');
                     else
                         alert('Your glucose level is high, please see our listed recommendations to maintain a normal healthy level.');
@@ -196,7 +193,64 @@ else{ ?>
             }
         </script>
 
-        <div id="calendar" style="margin-top: 20px; float: left; margin-left: 20px;">
+        <?php
+            if(isset($_GET['id']) && isset($_GET['name'])){?>
+
+        <div id="secondDiv" style="background-color: white; margin-top: 15px; width: 86%">
+            <div id="divheader" style="text-indent: 30%;">
+                <h2 id="header" style="text-decoration: underline; font-size: 40px; text-align: center; font-family: Times New Roman; color: black"><?= date('m-d-Y'); ?></h2>
+            </div>
+
+            <div class="information" style="height: 65%; margin-top: 10px;">
+                <div>
+                    <table class="table" style="margin-top: 15px">
+                        <tr>
+                            <th>Medication Name</th>
+                            <th>Time Taken</th>
+                            <th>Glucose</th>
+                            <th>Meal</th>
+                            <th>Activity Name</th>
+                        </tr>
+                        <?php
+                        $query = "SELECT * FROM calendar WHERE date = :date AND user_id = :id";
+                        $stmt = $dbh->prepare($query);
+                        $stmt->execute(array('date'=>$date, 'id'=>$id));
+                        $info = $stmt->fetchAll();
+
+                        foreach($info as $result)
+                        {
+                            echo '<tr><td>' . $result['medicine_name'] . '</td>';
+
+                            if($result['medicine_time'] == 0)
+                                echo "<td></td>";
+                            else
+                            {
+                                $time = new DateTime($result['medicine_time']);
+                                echo '<td>' . $time->format('h:i a') . '</td>';
+                            }
+
+                            if($result['glucose'] == 0)
+                                echo "<td></td>";
+                            else
+                                echo '<td>' . $result['glucose'] . '</td>';
+
+                            echo '<td>' . $result['meal'] . '</td>';
+                            echo '<td>' . $result['activity_name'] . '</td>';
+                        }
+                        ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <?php
+
+            }
+            else
+            {
+            ?>
+
+        <div id="calendar" style="margin-top: 48px; float: left; margin-left: 20px;">
             <div id="calendar_header" style="text-indent: 30%">
                 <h1></h1>
             </div>
@@ -205,7 +259,7 @@ else{ ?>
             <div id="calendar_content"></div>
 
             <div id="secondDiv" style="display: none; background-color: white;">
-                <div id="divheader" style="text-indent: 30%">
+                <div id="divheader" style="text-indent: 30%;">
                     <h2 id="header" style="text-decoration: underline; font-size: 40px; text-align: center; font-family: Times New Roman; color: black"><?= date('m-d-Y'); ?></h2>
                 </div>
 
@@ -282,5 +336,6 @@ else{ ?>
             </fieldset>
         </form>
     </div>
+    <?php } ?>
 </body>
 </html>

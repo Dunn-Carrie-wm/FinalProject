@@ -11,12 +11,12 @@ if (!isset($_SESSION['user_id'])) {
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Note Pad</title>
+    <title>Reminders</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="../Css/note.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../Css/note.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 </head>
 
@@ -158,8 +158,19 @@ if(@$_POST['formSubmit'] == "Submit")
         </p>
         <br>
         <p>
-            <label for="to">To</label>
-            <input id="to" class="w3-input" type="email" name="to" required>
+            <label for="to2">To</label>
+            <input list="to" id="to2" name="to" class="w3-input" required>
+            <datalist id="to">
+                <?php
+                    $query = "SELECT email, firstName, lastName FROM client WHERE doctor_id = :id";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute(array('id'=>$_SESSION['user_id']));
+                    $results = $stmt->fetchAll();
+
+                    foreach($results as $result)
+                        echo "<option value='". $result['email'] ."'>". $result['firstName'] . " " . $result['lastName'] ."</option>";
+                ?>
+            </datalist>
         </p>
         <br>
         <p>
