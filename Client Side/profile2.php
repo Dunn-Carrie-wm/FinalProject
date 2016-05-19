@@ -179,6 +179,21 @@ else{ ?>
                     $('#secondDiv').hide();
                 });
             });
+
+            function checkingGlucose()
+            {
+                var x = document.forms["addInput"]["glucose"].value;
+
+                if(x != null && x != "")
+                {
+                    if (x.value < 100)
+                        alert('Your glucose level is low, please see our listed recommendations to maintain a normal healthy level.');
+                    else if(100 < x.value < 140)
+                        alert('Your glucose level is normal/healthy.');
+                    else
+                        alert('Your glucose level is high, please see our listed recommendations to maintain a normal healthy level.');
+                }
+            }
         </script>
 
         <div id="calendar" style="margin-top: 20px; float: left; margin-left: 20px;">
@@ -216,16 +231,20 @@ else{ ?>
                                 foreach($info as $result)
                                 {
                                     echo '<tr><td>' . $result['medicine_name'] . '</td>';
+
                                     if($result['medicine_time'] == 0)
-                                    {
                                         echo "<td></td>";
-                                    }
                                     else
                                     {
                                         $time = new DateTime($result['medicine_time']);
                                         echo '<td>' . $time->format('h:i a') . '</td>';
                                     }
-                                    echo '<td>' . $result['glucose'] . '</td>';
+
+                                    if($result['glucose'] == 0)
+                                        echo "<td></td>";
+                                    else
+                                        echo '<td>' . $result['glucose'] . '</td>';
+
                                     echo '<td>' . $result['meal'] . '</td>';
                                     echo '<td>' . $result['activity_name'] . '</td>';
                                     echo '<td> <button class="delete" type="submit" name="remove" value="'. $result['calendar_id'] .'">-</button></td></tr>';
@@ -241,7 +260,7 @@ else{ ?>
     </div>
 
     <div id="inputs" style="height: 600px; width: 550px; margin-left: 740px; margin-top: -600PX;">
-        <form id="msform" method="post">
+        <form id="msform" method="post" name="addInput">
             <fieldset>
                 <h2 class="fs-title">Input Today's Data</h2>
                 <h3 class="fs-subtitle"><?= date("m-d-Y"); ?></h3>
@@ -259,7 +278,7 @@ else{ ?>
                     <option value="Biking">
                 </datalist>
 
-                <input type="submit" name="add" id="add" value="+">
+                <input type="submit" name="add" id="add" value="+" onclick="checkingGlucose()">
             </fieldset>
         </form>
     </div>
