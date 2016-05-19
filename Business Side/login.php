@@ -5,7 +5,8 @@
     <title>Login </title>
     <link href="https://assets.onestore.ms/cdnfiles/onestorerolling-1601-22000/shell/v3/scss/shell.min.css"
           rel="stylesheet" type="text/css" media="screen"/>
-    <link href="login.css" rel="stylesheet" type="text/css">
+    <link href="../Css/login.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../Css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -43,6 +44,19 @@
         }
     }
 ?>
+    <nav>
+        <div class="navToggle">
+            <div class="icon"></div>
+        </div>
+        <ul>
+            <li><a href="../homepage.php">Home Page</a></li>
+            <li><a href="../Business%20Side/login.php">Doctor</a></li>
+            <li><a href="../Client%20Side/login.php">Patient</a></li>
+            <li><a href="../FAQ.php">FAQs</a></li>
+        </ul>
+    </nav>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="index.js"></script>
 
 <h1 style="text-align: center; color: #00b7bb; margin-top: 4%">Login</h1>
 <div class="container">

@@ -128,7 +128,7 @@
                     <option value="Gestational">Gestational</option>
                 </select>
 
-                <select name="doctor" form="signUp" required>
+                <select name="doctor" form="signUp">
                     <option value="" selected="selected">Select Your Doctor</option>
                     <?php
                         require_once("../connect.php");

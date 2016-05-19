@@ -33,9 +33,9 @@
 
     if(@$_POST['add'])
     {
-        $query = "INSERT INTO calendar (medicine_name, date, medicine_time, activity_name, user_id) VALUES (:name, :date, :time, :activity, :id)";
+        $query = "INSERT INTO calendar (medicine_name, date, medicine_time, activity_name, glucose, meal, user_id) VALUES (:name, :date, :time, :activity, :glucose, :meal, :id)";
         $stmt = $dbh->prepare($query);
-        $stmt->execute(array('name'=>$_POST['medicine'], 'date'=>date('Y/m/d'), 'time'=>$_POST['time'], 'activity'=>$_POST['activity'], 'id'=>$id));
+        $stmt->execute(array('name'=>$_POST['medicine'], 'date'=>date('Y/m/d'), 'time'=>$_POST['time'], 'activity'=>$_POST['activity'], 'glucose' => $_POST['glucose'], 'meal'=>$_POST['meal'], 'id'=>$id));
     }
 
     if(@$_POST['remove'])
@@ -203,10 +203,12 @@ else{ ?>
                                 <tr>
                                     <th>Medication Name</th>
                                     <th>Time Taken</th>
+                                    <th>Glucose</th>
+                                    <th>Meal</th>
                                     <th>Activity Name</th>
                                 </tr>
                                 <?php
-                                $query = "SELECT * FROM calendar WHERE date = :date AND user_id = :id ORDER BY medicine_time";
+                                $query = "SELECT * FROM calendar WHERE date = :date AND user_id = :id";
                                 $stmt = $dbh->prepare($query);
                                 $stmt->execute(array('date'=>$date, 'id'=>$id));
                                 $info = $stmt->fetchAll();
@@ -223,6 +225,8 @@ else{ ?>
                                         $time = new DateTime($result['medicine_time']);
                                         echo '<td>' . $time->format('h:i a') . '</td>';
                                     }
+                                    echo '<td>' . $result['glucose'] . '</td>';
+                                    echo '<td>' . $result['meal'] . '</td>';
                                     echo '<td>' . $result['activity_name'] . '</td>';
                                     echo '<td> <button class="delete" type="submit" name="remove" value="'. $result['calendar_id'] .'">-</button></td></tr>';
                                 }
@@ -240,9 +244,11 @@ else{ ?>
         <form id="msform" method="post">
             <fieldset>
                 <h2 class="fs-title">Input Today's Data</h2>
-                <h3 class="fs-subtitle">Today's Date</h3>
+                <h3 class="fs-subtitle"><?= date("m-d-Y"); ?></h3>
+                <input id="time" type="time" name="time"/>
                 <input id="medicine" type="text" name="medicine" placeholder="Medication" />
-                <input id="time" type="time" name="time" placeholder="Time Taken" />
+                <input id="meal" type="text" name="meal" placeholder="Meal" />
+                <input id="glucose" type="text" name="glucose" placeholder="Glucose" />
 
                 <input list="activities" name="activity" placeholder="Activities">
                 <datalist id="activities">
